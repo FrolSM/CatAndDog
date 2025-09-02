@@ -1,0 +1,30 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница новостей</title>
+</head>
+<body>
+    <h1> Количество публикаций: {{ posts|length }} </h1>
+    <h1> Список новостей </h1>
+        {% if posts %}
+        <table>
+            <tr>
+                <td>'Автор'</td>
+                <td>'Дата'</td>
+                <td>'Текст'</td>
+            </tr>
+
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.author }}</td>
+                <td>{{ post.time|date:'d M Y' }}</td>
+                <td>{{ post.text }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <h2> Новостей нет! =( </h2>
+        {% endif %}
+</body>
+</html>

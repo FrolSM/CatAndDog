@@ -1,4 +1,4 @@
-from ckeditor_uploader.fields import RichTextUploadingField
+from django_ckeditor_5.fields import CKEditor5Field
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -23,7 +23,8 @@ class Post(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    text = RichTextUploadingField(blank=True)
+    text = CKEditor5Field()
+
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
@@ -40,5 +41,5 @@ class Pets(models.Model):
     name = models.CharField(max_length=30, unique=True)
     age = models.DateTimeField()
     text = models.TextField()
-    photo = RichTextUploadingField()
+    photo = CKEditor5Field()
 
