@@ -1,10 +1,7 @@
+{% extends 'flatpages/default.html' %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Страница новостей</title>
-</head>
-<body>
+{% block title %}Новостная лента{% endblock %}
+{% block content %}
     <h1> Количество публикаций: {{ posts|length }} </h1>
     <h1> Список новостей </h1>
         {% if posts %}
@@ -26,5 +23,4 @@
         {% else %}
         <h2> Новостей нет! =( </h2>
         {% endif %}
-</body>
-</html>
+{% endblock %}

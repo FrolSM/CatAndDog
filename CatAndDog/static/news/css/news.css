@@ -1,0 +1,26 @@
+body {
+    background: #2c2c2c; /* цвет контента */
+}
+
+aside {
+    float: left; /* расположение */
+    background: #181818; /*цвет панели слева */
+    width: 20%; /* ширина блока */
+    padding: 3; /* отступы */
+    height: 100vh; /* высота блока */
+    color: #fff; /* цвет */
+    border-right: 5px solid #4d4d4d;
+}
+
+aside img {
+    width: 80px; /* ширина картинки */
+    float: left; /* расположение */
+}
+
+aside .logo {
+    font-size: 40px; /* размер шрифта */
+    margin-left 10px; /* отступ слевой стороны */
+    font-weight: bold; /* жирный шрифт */
+    position: relative; /*  */
+    top: -5px;
+}
