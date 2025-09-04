@@ -22,5 +22,25 @@ aside .logo {
     margin-left 10px; /* отступ слевой стороны */
     font-weight: bold; /* жирный шрифт */
     position: relative; /*  */
-    top: -5px;
+    top: 5px;
+}
+
+aside h3 {
+    margin-top: 50px; /* отступ сверху */
+    font-size: 28px; /* размер шрифта */
+}
+
+aside ul {list-style: none}
+aside ul li {
+    color: #fff; /* цвет шрифта */
+    display: block; /* блочный элемент */
+    margin-top: 20px; /* отступ сверху */
+    transition: all .6s ease
+}
+
+aside ul li:hover, aside ul a:hover {
+    color: eb5959; /* цвет при наведении */
+    text-decoration: none; /* убрана полоса при наведении */
+    transform: scale(1.10); /* увелечение при наведение */
+
 }
