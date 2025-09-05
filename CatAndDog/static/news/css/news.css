@@ -1,14 +1,14 @@
 body {
-    background: #2c2c2c; /* цвет контента */
+    background: #a18163; /* цвет контента */
 }
 
 aside {
     float: left; /* расположение */
-    background: #181818; /*цвет панели слева */
+    background: #fbfbf1; /*цвет панели слева */
     width: 20%; /* ширина блока */
-    padding: 3; /* отступы */
+    padding: 2.5; /* отступы */
     height: 100vh; /* высота блока */
-    color: #fff; /* цвет */
+    color: #48280f; /* цвет текста */
     border-right: 5px solid #4d4d4d;
 }
 
@@ -22,7 +22,7 @@ aside .logo {
     margin-left 10px; /* отступ слевой стороны */
     font-weight: bold; /* жирный шрифт */
     position: relative; /*  */
-    top: 5px;
+    top: 7px;
 }
 
 aside h3 {
@@ -32,14 +32,14 @@ aside h3 {
 
 aside ul {list-style: none}
 aside ul li {
-    color: #fff; /* цвет шрифта */
+    color: #eca646; /* цвет шрифта */
     display: block; /* блочный элемент */
     margin-top: 20px; /* отступ сверху */
     transition: transform .6s ease /* плавность для transform */
 }
 
 aside ul li:hover, aside ul a:hover {
-    color: eb5959; /* цвет при наведении */
+    color: #48280f; /* цвет при наведении */
     text-decoration: none; /* убрана полоса при наведении */
     transform: scale(1.05); /* увелечение при наведение */
 
@@ -55,3 +55,5 @@ main .features {
 
 main .features h1 {font-size: 50px;} /* размер шрифта */
 main .features p {max-width: 400px; margin: 20px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
+
+a { text-decoration: none; }
