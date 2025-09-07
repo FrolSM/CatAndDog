@@ -70,3 +70,11 @@ main .btn-primary {
 }
 
 ul { list-style-type: none; }  /* убрал точки из контента */
+
+.alert-warning {
+    float: left;
+    clear: both;
+    width: 700px;
+    margin: 20px 34%;
+    text-align: left;
+}
