@@ -142,7 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_5_CONFIGS = {
     "default": {
         "toolbar": [
-            "sourceEditing"
+            "insertImage", "|",
         ],
     }
 }
