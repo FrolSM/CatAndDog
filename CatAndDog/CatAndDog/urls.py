@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("news.urls")),
+    path('accounts/', include('allauth.urls')),
     path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
