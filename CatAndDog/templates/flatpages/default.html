@@ -22,6 +22,13 @@
             <a href="{% url 'contacts' %}"><li><i class="fa-solid fa-address-book"></i> Контакты </li></a>
             <a href=""><li><i class="fa-solid fa-cat"></i> Наши питомцы <i class="fa-solid fa-dog"></i></li></a>
         </ul>
+        <div class="conteiner">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">Профиль</a>
+            {% else %}
+            <a href="{% url 'account_login' %}">Войти</a>
+            {% endif %}
+        </div>
     </aside>
     <main>
         {% block content %}
