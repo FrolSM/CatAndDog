@@ -26,8 +26,8 @@ class Post(models.Model):
     author = models.ForeignKey(Users, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
     title = models.CharField('Заголовок', max_length=50, default='')
-    category = models.ForeignKey(Category, default=1, on_delete=models.CASCADE)
-    text = CKEditor5Field()
+    category = models.ForeignKey(Category, verbose_name='Категория', default=1, on_delete=models.CASCADE)
+    text = CKEditor5Field(verbose_name='Текст')
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
