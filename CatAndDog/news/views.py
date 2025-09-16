@@ -3,6 +3,7 @@ from .models import *
 from .forms import PostForm
 from django.urls import reverse_lazy
 from django.shortcuts import render
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
 class PostsList(ListView):
@@ -23,6 +24,13 @@ class PostCreate(CreateView):
     form_class = PostForm
     model = Post
     template_name = 'news/post_create.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='authors').exists()
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class PostUpdate(UpdateView):
