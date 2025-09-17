@@ -20,7 +20,7 @@ class PostDetail(DetailView):
     context_object_name = 'post'
 
 
-class PostCreate(CreateView):
+class PostCreate(UserPassesTestMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'news/post_create.html'
