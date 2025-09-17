@@ -186,5 +186,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 ACCOUNT_FORMS = {'signup': 'sign.forms.MyCustomSignupForm'}
-LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'account_login'
+LOGIN_REDIRECT_URL = 'profile'
+LOGOUT_REDIRECT_URL = '/'
+

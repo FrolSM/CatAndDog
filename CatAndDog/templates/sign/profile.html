@@ -8,9 +8,6 @@
 <!--    {% if is_not_authors %}-->
 <!--    <button> <a href="sign/upgrade/"> Стать автором!</a> </button>-->
 <!--    {% endif %}-->
-    <form action="{% url 'account_logout' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Выйти">
-    </form>
+        <a href="{% url 'account_logout' %}" class="btn btn-outline-danger mt-2"> Выйти </a>
     </div>
 {% endblock content %}
