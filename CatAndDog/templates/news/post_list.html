@@ -10,7 +10,7 @@
             {% for post in posts %}
                 <p>{{ post.author }} {{ post.time|date:'d M Y' }}</p>
                 <p><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></p>
-                <p>{{ post.text }}</p>
+                <p>{{ post.text|truncatechars:5 }}</p>
                 <hr>
             {% endfor %}
         {% else %}
