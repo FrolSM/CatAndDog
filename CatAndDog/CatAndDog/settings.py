@@ -177,8 +177,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'yandex': {
         'APP': {
-            'client_id': '123',
-            'secret': '456',
+            'client_id': os.getenv('YANDEX_CLIENT_ID'),
+            'secret': os.getenv('YANDEX_SECRET'),
             'key': ''
         }
     }
