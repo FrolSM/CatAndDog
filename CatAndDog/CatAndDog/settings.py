@@ -168,13 +168,6 @@ ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_SESSION_REMEMBER = True
 
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': '123',
-            'secret': '456',
-            'key': ''
-        }
-    },
     'yandex': {
         'APP': {
             'client_id': os.getenv('YANDEX_CLIENT_ID'),
