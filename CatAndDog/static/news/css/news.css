@@ -56,7 +56,7 @@ main .features {
     color: #fff; /* цвет */
     margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
-    width: 75%; /* ширина */
+    width: 100%; /* ширина */
 }
 
 main .features h1 {font-size: 50px;} /* размер шрифта */

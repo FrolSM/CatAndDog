@@ -11,7 +11,7 @@
                 <p>{{ post.author }} {{ post.time|date:'d M Y' }}</p>
                 <p><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></p>
                 <p>{{ post.text|truncatechars:30 }}</p>
-                <hr>
+                <img src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
             {% endfor %}
         {% else %}
         <h2> Новостей нет! =( </h2>
