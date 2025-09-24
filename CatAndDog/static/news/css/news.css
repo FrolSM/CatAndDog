@@ -25,11 +25,6 @@ aside .logo {
     top: 7px;
 }
 
-aside h3 {
-    margin-top: 50px; /* отступ сверху */
-    font-size: 28px; /* размер шрифта */
-}
-
 aside ul {
     list-style: none;
     float: right;
@@ -40,7 +35,7 @@ aside ul li {
     color: #eca646; /* цвет шрифта */
     display: inline-block; /* блочный элемент */
     margin-top: 23px; /* отступ сверху */
-    margin-right: 50px; /* отступ сверху */
+    margin-right: 50px; /* отступ справа */
     transition: transform .6s ease /* плавность для transform */
 }
 
