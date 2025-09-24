@@ -8,6 +8,7 @@ nav {
     padding: 2.5; /* отступы */
     height: 90px; /* высота блока */
     width: 100%; /* ширина блока */
+    min-width: 1650px;
     color: #48280f; /* цвет текста */
     border-bottom: 5px solid #48280f;
 }
