@@ -2,36 +2,35 @@ body {
     background: #a18163; /* цвет контента */
 }
 
-aside {
+nav {
     position: fixed; /* прикрепление панели */
     background: #fbfbf1; /*цвет панели слева */
     padding: 2.5; /* отступы */
     height: 90px; /* высота блока */
     width: 100%; /* ширина блока */
     color: #48280f; /* цвет текста */
-    border-bottom: 5px solid #4d4d4d;
+    border-bottom: 5px solid #48280f;
 }
 
-aside img {
+nav img {
     width: 80px; /* ширина картинки */
     float: left; /* расположение */
 }
 
-aside .logo {
+nav .logo {
     font-size: 40px; /* размер шрифта */
-    margin-left 10px; /* отступ слевой стороны */
     font-weight: bold; /* жирный шрифт */
-    position: relative; /*  */
-    top: 7px;
+    position: fixed; /* прикрепление */
+    top: 9px;
 }
 
-aside ul {
+nav ul {
     list-style: none;
     float: right;
-    font-size: 23px;
+    font-size: 24px;
 }
 
-aside ul li {
+nav ul li {
     color: #eca646; /* цвет шрифта */
     display: inline-block; /* блочный элемент */
     margin-top: 23px; /* отступ сверху */
@@ -39,7 +38,7 @@ aside ul li {
     transition: transform .6s ease /* плавность для transform */
 }
 
-aside ul li:hover, aside ul a:hover {
+nav ul li:hover, aside ul a:hover {
     color: #48280f; /* цвет при наведении */
     text-decoration: none; /* убрана полоса при наведении */
     transform: scale(1.05); /* увелечение при наведение */
