@@ -24,7 +24,7 @@ class Category(models.Model):
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=50)
+    title = models.CharField(verbose_name='Заголовок', max_length=50)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     # text = CKEditor5Field(verbose_name='Текст')
     text = models.TextField(verbose_name='Текст')
@@ -46,10 +46,10 @@ class Comment(models.Model):
 
 
 class Pets(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-    age = models.DateTimeField()
-    text = models.TextField()
-    photo = CKEditor5Field()
+    name = models.CharField('Кличка', max_length=30, unique=True)
+    age = models.IntegerField('Возраст')
+    text = models.TextField('О питомце')
+    photo = models.FileField('Фото')
 
     class Meta:
         verbose_name = 'Питомец'
