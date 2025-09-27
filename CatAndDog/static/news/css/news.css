@@ -68,6 +68,7 @@ main .features a {
 
 main .btn-primary {
     background-color: #eca646; /* цвет кнопки */
+    width: 200px;
 }
 
 ul { list-style-type: none; }  /* убрал точки из контента */
