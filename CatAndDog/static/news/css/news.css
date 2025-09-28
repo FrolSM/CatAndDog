@@ -4,7 +4,7 @@ body {
 
 nav {
     position: fixed; /* прикрепление панели */
-    background: #fbfbf1; /*цвет панели слева */
+    background: #fbfbf1; /*цвет панели сверху */
     padding: 2.5; /* отступы */
     height: 90px; /* высота блока */
     width: 100%; /* ширина блока */
@@ -48,7 +48,7 @@ nav ul li:hover, aside ul a:hover {
 
 main .features {
     float: left; /* позиция */
-    color: #fff; /* цвет */
+    color: #fbfbf1; /* цвет */
     margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
@@ -68,6 +68,7 @@ main .features a {
 
 main .btn-primary {
     background-color: #eca646; /* цвет кнопки */
+    width: 200px;
 }
 
 ul { list-style-type: none; }  /* убрал точки из контента */

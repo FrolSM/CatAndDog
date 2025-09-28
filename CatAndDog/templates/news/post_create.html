@@ -5,7 +5,7 @@
 <div class="features">
     <h1>Создание новости</h1>
     <hr>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}
