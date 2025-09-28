@@ -5,9 +5,11 @@
     <div class="features">
         <h1>{{ post.title }}</h1>
         <p>Категория:{{ post.category }} Пользователь:{{ post.author }} Время:{{ post.time|date:'d M Y' }}</p>
-        {% if post.file %}
-            <p><img class="img-article-left" width="300px" src="{{ post.file.url }}"></p>
-            <p><video class="video" controls width="700px" src="{{ post.file.url }}"></video></p>
+        {% if post.photo %}
+            <p><img class="img-article-left" width="300px" src="{{ post.photo.url }}"></p>
+        {% endif %}
+        {% if post.video %}
+            <p><video class="video" controls width="700px" src="{{ post.video.url }}"></video></p>
         {% endif %}
         <p>{{ post.text }}</p>
     </div>
