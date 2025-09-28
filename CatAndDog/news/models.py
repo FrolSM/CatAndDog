@@ -26,9 +26,9 @@ class Post(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     title = models.CharField(verbose_name='Заголовок', max_length=50)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
-    # text = CKEditor5Field(verbose_name='Текст')
     text = models.TextField(verbose_name='Текст')
-    file = models.FileField(verbose_name='Файл')
+    photo = models.FileField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Фото')
+    video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Видео')
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
