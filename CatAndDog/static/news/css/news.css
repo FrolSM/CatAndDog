@@ -1,8 +1,8 @@
 body {
     background: #a18163; /* цвет контента */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    display: flex; /* Создаем гибкую структуру */
+    flex-direction: column; /* Располагаем элементы вертикально */
+    min-height: 100vh; /* Минимальная высота равна высоте вьюпорта */
 }
 
 nav {
@@ -105,11 +105,10 @@ main .account button {
 }
 
 footer {
-    margin-top: auto;
+    margin-top: auto; /* Здесь вступает в действие магия Flexbox */
     background: #945b36; /*цвет панели сверху */
     height: 100px; /* высота блока */
     width: 100%; /* ширина блока */
     min-width: 1650px;
     border-top: 5px solid #48280f;
-    bottom: 0;
 }
