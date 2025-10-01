@@ -1,5 +1,8 @@
 body {
     background: #a18163; /* цвет контента */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 nav {
@@ -101,3 +104,12 @@ main .account button {
     color: #48280f;
 }
 
+footer {
+    margin-top: auto;
+    background: #945b36; /*цвет панели сверху */
+    height: 100px; /* высота блока */
+    width: 100%; /* ширина блока */
+    min-width: 1650px;
+    border-top: 5px solid #48280f;
+    bottom: 0;
+}
