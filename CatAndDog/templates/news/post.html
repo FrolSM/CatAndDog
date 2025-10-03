@@ -4,7 +4,7 @@
 {% block content %}
     <div class="features">
         <h1>{{ post.title }}</h1>
-        <p>Категория:{{ post.category }} Пользователь:{{ post.author }} Время:{{ post.time|date:'d M Y' }}</p>
+        <p>Категория:{{ post.category }} Пользователь:{{ post.author }} Дата: {{ post.time }}</p>
         {% if post.photo %}
             <p><img class="img-article-left" width="300px" src="{{ post.photo.url }}"></p>
         {% endif %}
