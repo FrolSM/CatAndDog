@@ -46,3 +46,9 @@ class PostDelete(DeleteView):
 
 def contacts(request):
     return render(request, 'news/contacts.html')
+
+
+class PetsList(ListView):
+    model = Pets
+    context_object_name = 'pets'
+    template_name = 'news/pets.html'

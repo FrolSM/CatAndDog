@@ -147,3 +147,13 @@ main .postdeteil video {
     margin-left: 500px; /* отступ слева */
     width: 400px;
 }
+
+main .pets1 {
+    float: left; /* позиция */
+    color: #fbfbf1; /* цвет */
+    margin-top: 100px; /* отступ сверху */
+    text-align: center; /* расположение по центру */
+    width: 100%; /* ширина */
+}
+
+main .features p {max-width: 400px; margin: 20px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
