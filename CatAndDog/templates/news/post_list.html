@@ -17,7 +17,9 @@
                     <video class="video" controls width="500px" src="{{ post.video.url }}"></video>
                 {% endif %}
                 <p>{{ post.text|truncatechars:30 }}</p>
+                {% if not forloop.last %}
                 <img src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
+                {% endif %}
             {% endfor %}
         {% else %}
         <h2> Новостей нет! =( </h2>
