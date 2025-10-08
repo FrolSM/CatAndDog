@@ -57,6 +57,16 @@ main .features {
     width: 100%; /* ширина */
 }
 
+main .video {
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+main .img_list {
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
 main .features h1 {font-size: 50px;} /* размер шрифта */
 main .features p {max-width: 400px; margin: 20px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
 
@@ -136,13 +146,10 @@ main .postdeteil p {max-width: 600px; margin: 20px auto;} /* ширина 600; �
 main .postdeteil h5 {max-width: 1000px; margin: 20px auto;}
 
 main .postdeteil img {
-    float: left;
-    margin-left: 500px; /* отступ слева */
     width: 400px;
     height: 500px;
     border: 4px solid #48280f;
     border-radius: 32px;
-
 }
 
 main .postdeteil video {
