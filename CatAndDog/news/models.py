@@ -27,8 +27,17 @@ class Post(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=50)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Текст')
-    photo = models.FileField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Фото')
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Видео')
+    rating = models.IntegerField(default=0)
+
+    def like(self):
+        self.rating += 1
+        self.save()
+
+    def dislike(self):
+        self.rating -= 1
+        self.save()
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
@@ -40,8 +49,8 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    text = models.TextField('Текст')
     time_comm = models.DateTimeField(auto_now_add=True)
 
 
