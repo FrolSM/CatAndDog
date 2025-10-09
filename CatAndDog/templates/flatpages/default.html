@@ -19,7 +19,7 @@
             <a href="{% url 'post_list' %}"><li><i class="fa-solid fa-newspaper"></i> Новости </li></a>
             <a href="{% url 'post_create' %}"><li><i class="fa-solid fa-plus"></i> Создать новость </li></a>
             <a href="{% url 'contacts' %}"><li><i class="fa-solid fa-address-book"></i> Контакты </li></a>
-            <a href=""><li><i class="fa-solid fa-cat"></i> Наши питомцы <i class="fa-solid fa-dog"></i></li></a>
+            <a href="{% url 'pets_list' %}"><li><i class="fa-solid fa-cat"></i> Наши питомцы <i class="fa-solid fa-dog"></i></li></a>
             {% if user.is_authenticated %}
             <a href="{% url 'profile' %}"><li><i class="fa-solid fa-user"></i> Профиль </li></a>
             {% else %}
@@ -31,11 +31,17 @@
             <a href="{% url 'account_signup' %}"><li><i class="fa-solid fa-user-plus"></i> Регистрация </li></a>
             {% endif %}
         </ul>
-
     </nav>
     <main>
         {% block content %}
         {% endblock %}
     </main>
+    <footer>
+        <ul>
+            <a href="https://t.me/bengal_catssss" target="_blank" title="Переход в ТГ"><li><i class="fa-brands fa-telegram"></i> Наш Телеграм </li></a>
+            <a href="" title="1234567890"><li><i class="fa-solid fa-phone"></i> Наш Телефон </li></a>
+            <a href="https://vk.com/frolovserejka" target="_blank" title="Переход на контакты создателя сайта"><li><i class="fa-solid fa-code"></i> Хочу такой сайт! </li></a>
+        </ul>
+    </footer>
 </body>
 </html>

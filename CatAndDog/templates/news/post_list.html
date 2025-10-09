@@ -4,14 +4,21 @@
 {% block title %}Новостная лента{% endblock %}
 {% block content %}
 <div class="features">
-    <h1> Количество публикаций: {{ posts|length }} </h1>
     <h1> Список новостей </h1>
         {% if posts %}
             {% for post in posts %}
-                <p>{{ post.category }} {{ post.author }} {{ post.time|date:'d M Y' }}</p>
+<!--                <p>Категория: {{ post.category }}<br>Пользователь: {{ post.author }} Дата: {{ post.time }}</p>-->
                 <p><h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3></p>
+                {% if post.photo %}
+                    <img class="img_list" src="{{ post.photo.url }}">
+                {% endif %}
+                {% if post.video %}
+                    <video class="video" controls width="650px" src="{{ post.video.url }}"></video>
+                {% endif %}
                 <p>{{ post.text|truncatechars:30 }}</p>
-                <img src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
+                {% if not forloop.last %}
+                <img class="hrline" height="120px" src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
+                {% endif %}
             {% endfor %}
         {% else %}
         <h2> Новостей нет! =( </h2>

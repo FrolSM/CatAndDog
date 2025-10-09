@@ -1,5 +1,8 @@
 body {
     background: #a18163; /* цвет контента */
+    display: flex; /* Создаем гибкую структуру */
+    flex-direction: column; /* Располагаем элементы вертикально */
+    min-height: 100vh; /* Минимальная высота равна высоте вьюпорта */
 }
 
 nav {
@@ -54,8 +57,19 @@ main .features {
     width: 100%; /* ширина */
 }
 
+main .video {
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+main .img_list {
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
 main .features h1 {font-size: 50px;} /* размер шрифта */
 main .features p {max-width: 400px; margin: 20px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
+
 
 a { text-decoration: none; }
 
@@ -101,3 +115,56 @@ main .account button {
     color: #48280f;
 }
 
+footer {
+    margin-top: auto; /* Здесь вступает в действие магия Flexbox */
+    background: #945b36; /*цвет панели сверху */
+    height: 100px; /* высота блока */
+    width: 100%; /* ширина блока */
+    min-width: 1650px;
+    border-top: 5px solid #48280f;
+}
+
+footer ul a {
+    display: inline-block;
+    color: 000000;
+    font-size: 24px;
+    margin-top: 25px;
+    margin-left: 100px;
+}
+
+main .postdeteil {
+    float: left; /* позиция */
+    color: #fbfbf1; /* цвет */
+    margin-top: 100px; /* отступ сверху */
+    text-align: center; /* расположение по центру */
+    width: 100%; /* ширина */
+    min-width: 1650px;
+}
+
+main .postdeteil h1 {font-size: 50px;} /* размер шрифта */
+main .postdeteil p {max-width: 600px; margin: 20px auto;} /* ширина 600; отступ сверху и снизу 20 по бокам авто*/
+main .postdeteil h5 {max-width: 1000px; margin: 20px auto;}
+
+main .postdeteil img {
+    width: 400px;
+    height: 500px;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+main .postdeteil video {
+    float: left;
+    margin-left: 500px; /* отступ слева */
+    width: 400px;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+
+}
+
+main .pets1 {
+    float: left; /* позиция */
+    color: #fbfbf1; /* цвет */
+    margin-top: 100px; /* отступ сверху */
+    text-align: center; /* расположение по центру */
+    width: 100%; /* ширина */
+}
