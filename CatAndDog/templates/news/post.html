@@ -12,5 +12,6 @@
             <video class="video" controls src="{{ post.video.url }}"></video>
         {% endif %}
         <h5>{{ post.text }}</h5>
+        <a class="btn btn-outline-dark" href="{% url 'like' post.pk %}"> Лайк <i class="fa-regular fa-thumbs-up"></i> {{ post.rating }}</a>
     </div>
 {% endblock content %}

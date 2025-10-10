@@ -1,8 +1,7 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import PostForm
-from django.urls import reverse_lazy
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 
@@ -52,3 +51,17 @@ class PetsList(ListView):
     model = Pets
     context_object_name = 'pets'
     template_name = 'news/pets.html'
+
+
+def like(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.like()
+    post.save()
+    return render(request, 'news/post.html', {'post': post})
+
+
+# def dislike(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     post.dislike()
+#     post.save()
+#     return render(request, 'flatpages/post.html', {'post': post})
