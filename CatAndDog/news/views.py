@@ -57,7 +57,7 @@ def like(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.like()
     post.save()
-    return render(request, 'flatpages/post.html', {'post': post})
+    return render(request, 'news/post.html', {'post': post})
 
 
 def dislike(request, pk):
