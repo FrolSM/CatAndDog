@@ -8,5 +8,5 @@ urlpatterns = [
     path('contacts/', contacts, name='contacts'),
     path('pets/', PetsList.as_view(), name='pets_list'),
     path('<int:pk>/like/', like, name='like'),
-    path('<int:pk>/dislike/', dislike, name='dislike'),
+    # path('<int:pk>/dislike/', dislike, name='dislike'),
 ]
