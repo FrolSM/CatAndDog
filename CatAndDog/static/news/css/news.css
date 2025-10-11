@@ -57,12 +57,12 @@ main .features {
     width: 100%; /* ширина */
 }
 
-main .video {
+main .features .video {
     border: 4px solid #48280f;
     border-radius: 32px;
 }
 
-main .img_list {
+main .features .img_list {
     border: 4px solid #48280f;
     border-radius: 32px;
 }
@@ -77,7 +77,7 @@ a { text-decoration: none; }
 main .features a {
     padding: 20; /* отступы */
     color: #48280f; /* цвет шрифта */
-    display: block /* блочные елементы */
+    display: block; /* блочные елементы */
 }
 
 main .btn-primary {
@@ -133,7 +133,6 @@ footer ul a {
 }
 
 main .postdeteil {
-    float: left; /* позиция */
     color: #fbfbf1; /* цвет */
     margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
@@ -153,13 +152,21 @@ main .postdeteil img {
 }
 
 main .postdeteil video {
-    float: left;
-    margin-left: 500px; /* отступ слева */
-    width: 400px;
+    width: 500px;
     border: 4px solid #48280f;
     border-radius: 32px;
-
 }
+main .like a {
+    display: inline-block;
+    color: #48280f;
+    font-size: 20px;
+    margin: auto;
+    width: 200px;
+    height: 36px;
+    border: 3px solid #48280f;
+    border-radius: 32px;
+}
+
 
 main .pets1 {
     float: left; /* позиция */
