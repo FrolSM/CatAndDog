@@ -57,12 +57,12 @@ main .features {
     width: 100%; /* ширина */
 }
 
-main .video {
+main .features .video {
     border: 4px solid #48280f;
     border-radius: 32px;
 }
 
-main .img_list {
+main .features .img_list {
     border: 4px solid #48280f;
     border-radius: 32px;
 }
