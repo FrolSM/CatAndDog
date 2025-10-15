@@ -1,4 +1,5 @@
 {% extends 'flatpages/default.html' %}
+{% load news_filters %}
 
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
@@ -11,7 +12,7 @@
         {% if post.video %}
             <video class="video" controls src="{{ post.video.url }}"></video>
         {% endif %}
-        <h5>{{ post.text }}</h5>
+        <h5>{{ post.text|censor }}</h5>
         <div class="like">
             <a href="{% url 'like' post.pk %}"> Лайк <i class="fa-regular fa-thumbs-up"></i> {{ post.rating }}</a>
             <a href=""> Коментировать <i class="fa-regular fa-comment"></i></a>

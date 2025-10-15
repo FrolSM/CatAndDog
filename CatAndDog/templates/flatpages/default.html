@@ -19,7 +19,7 @@
         <ul>
             <a href="{% url 'post_list' %}"><li><i class="fa-solid fa-newspaper"></i> Новости </li></a>
             <a href="{% url 'post_create' %}"><li><i class="fa-solid fa-plus"></i> Создать новость </li></a>
-            <a href="{% url 'contacts' %}"><li><i class="fa-solid fa-address-book"></i> Контакты </li></a>
+            <a href="{% url 'contacts' %}"><li><i class="fa-solid fa-address-book"></i> О нас </li></a>
             <a href="{% url 'pets_list' %}"><li><i class="fa-solid fa-cat"></i> Наши питомцы <i class="fa-solid fa-dog"></i></li></a>
             {% if user.is_authenticated %}
             <a href="{% url 'profile' %}"><li><i class="fa-solid fa-user"></i> Профиль </li></a>

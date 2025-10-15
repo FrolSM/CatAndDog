@@ -1,5 +1,6 @@
 {% extends 'flatpages/default.html' %}
 {% load static %}
+{% load news_filters %}
 
 {% block title %}Новостная лента{% endblock %}
 {% block content %}
@@ -17,7 +18,7 @@
                 {% if post.video %}
                     <video class="video" controls width="650px" src="{{ post.video.url }}"></video>
                 {% endif %}
-                <p>{{ post.text|truncatechars:30 }}</p>
+                <p>{{ post.text|truncatechars:30|censor }}</p>
                 {% if not forloop.last %}
                 <img class="hrline" height="120px" src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
                 {% endif %}
