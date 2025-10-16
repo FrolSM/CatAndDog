@@ -10,7 +10,7 @@ class PostsList(ListView):
     ordering = '-time'
     context_object_name = 'posts'
     template_name = 'news/post_list.html'
-    # paginate_by = 10
+    paginate_by = 2
 
 
 class PostDetail(DetailView):
@@ -58,7 +58,6 @@ def like(request, pk):
     post.like()
     post.save()
     return render(request, 'news/post.html', {'post': post})
-
 
 # def dislike(request, pk):
 #     post = get_object_or_404(Post, pk=pk)

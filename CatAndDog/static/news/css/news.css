@@ -184,3 +184,10 @@ main .pets1 {
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
 }
+
+
+main .pagination {
+    margin: auto;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
