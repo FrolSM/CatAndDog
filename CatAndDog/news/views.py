@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
+from django_filters.views import FilterView
 from .filters import PostFilter
 from .models import *
 from .forms import PostForm
@@ -7,22 +7,24 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import UserPassesTestMixin
 
 
-class PostsList(ListView):
+class PostsList(FilterView):
     model = Post
     ordering = '-time'
     context_object_name = 'posts'
     template_name = 'news/post_list.html'
-    paginate_by = 2
+    paginate_by = 1
+    filterset_class = PostFilter
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.post_filtered = PostFilter(self.request.GET, queryset=queryset)
-        return self.post_filtered.qs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filter'] = self.post_filtered
-        return context
+    # как работает фильтр(но в проекте ипользуем FilterView)
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     self.post_filtered = PostFilter(self.request.GET, queryset=queryset)
+    #     return self.post_filtered.qs
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['filter'] = self.post_filtered
+    #     return context
 
 
 class PostDetail(DetailView):
