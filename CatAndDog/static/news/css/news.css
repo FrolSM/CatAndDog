@@ -209,12 +209,54 @@ main .features .filter-form p{
 .filter-form select {
     width: 100%;
     box-sizing:border-box;
+    background: #e2d6c1;
     border: 4px solid #48280f;
     border-radius: 32px;
 }
 
 .filter-form input[type='submit']{
     width: auto;
+    font-size: 20px;
+    background: #eca646;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+.form-create{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main .features .form-create p{
+    width: 350px;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.form-create input:not([type='submit']),
+.form-create select {
+    color: #48280f;
+    width: 100%;
+    background: #e2d6c1;
+    box-sizing:border-box;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+.form-create input[type='submit']{
+    width: auto;
+    font-size: 20px;
+    background: #eca646;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+main .features .form-create p textarea{
+    width: 350px;
+    font-size: 20px;
+    margin-top: 5px;
+    background: #e2d6c1;
     border: 4px solid #48280f;
     border-radius: 32px;
 }
