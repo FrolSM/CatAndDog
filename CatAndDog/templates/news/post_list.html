@@ -31,36 +31,37 @@
         {% else %}
         <h2> Новостей нет! =( </h2>
         {% endif %}
-</div>
-<div class="pagination">
-        <ul class="pagination">
-            <!-- Кнопка назад -->
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">Haзaд</a>
-                </li>
-            {% else %}
-                <li class="page-item disabled"><span class="page-link">Haзaд</span></li>
-            {% endif %}
-
-            <!-- Текущие страницы -->
-            {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}
-                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ num }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">{{ num }}</a>
+        <div class="pagination">
+            <ul>
+                <!-- Кнопка назад -->
+                {% if page_obj.has_previous %}
+                    <li>
+                        <a class="page-pagination" href="?page={{ page_obj.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">Haзaд</a>
                     </li>
+                {% else %}
+                    <li><span class="page-pagination">Haзaд</span></li>
                 {% endif %}
-            {% endfor %}
-            <!-- Кнопка вперед -->
-            {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">Bпеpед</a>
-                </li>
-            {% else %}
-                <li class="page-item disabled"><span class="page-link">Bпepeд</span></li>
-            {% endif %}
-        </ul>
+
+                <!-- Текущие страницы -->
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li><span class="">{{ num }}</span></li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li>
+                            <a class="page-pagination" href="?page={{ num }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                <!-- Кнопка вперед -->
+                {% if page_obj.has_next %}
+                    <li>
+                        <a class="page-pagination" href="?page={{ page_obj.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">Bпеpед</a>
+                    </li>
+                {% else %}
+                    <li><span class="page-pagination">Bпepeд</span></li>
+                {% endif %}
+            </ul>
+        </div>
 </div>
+
 {% endblock %}

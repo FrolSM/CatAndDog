@@ -185,6 +185,8 @@ main .pets1 {
     width: 100%; /* ширина */
 }
 
+<<<<<<< HEAD
+=======
 
 main .pagination {
     margin: auto;
@@ -192,6 +194,7 @@ main .pagination {
     border-radius: 32px; /* закругление границ элемента */
 }
 
+>>>>>>> ddba9bc7f83c4535542e65b1238aa5fe88944601
 .filter-form{
     display: flex;
     flex-direction: column;
@@ -274,3 +277,25 @@ main .about p {
     max-width: 1000px; /* ширина 1000 */
     margin: 10px auto; /*отступ сверху и снизу 10 по бокам авто*/
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination ul {
+    display: flex;
+    border: 4px solid #48280f;
+    border-radius: 32px;
+}
+
+.pagination ul li {
+    padding: 10px;
+}
+
+.page-pagination {
+    color: #48280f;
+    border: 3px solid #48280f;
+    border-radius: 30px;
+    font-size: 20px;
+}
+
