@@ -1,16 +1,21 @@
 {% extends 'flatpages/default.html' %}
+{% load news_filters %}
 
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-    <div class="features">
+    <div class="postdeteil">
         <h1>{{ post.title }}</h1>
-        <p>Категория:{{ post.category }} Пользователь:{{ post.author }} Время:{{ post.time|date:'d M Y' }}</p>
+        <p>Категория: {{ post.category }} Пользователь: {{ post.author }}<br> Дата: {{ post.time }}</p>
         {% if post.photo %}
-            <p><img class="img-article-left" width="300px" src="{{ post.photo.url }}"></p>
+            <img class="img-article-left" src="{{ post.photo.url }}">
         {% endif %}
         {% if post.video %}
-            <p><video class="video" controls width="700px" src="{{ post.video.url }}"></video></p>
+            <video class="video" controls src="{{ post.video.url }}"></video>
         {% endif %}
-        <p>{{ post.text }}</p>
+        <h5>{{ post.text|censor }}</h5>
+        <div class="like">
+            <a href="{% url 'like' post.pk %}"> Лайк <i class="fa-regular fa-thumbs-up"></i> {{ post.rating }}</a>
+            <a href=""> Коментировать <i class="fa-regular fa-comment"></i></a>
+        </div>
     </div>
 {% endblock content %}

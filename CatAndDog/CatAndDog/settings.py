@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'news',
     'sign',
-    'django_ckeditor_5',
+    'django_filters',
 
 ]
 
@@ -146,14 +146,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CKEDITOR_5_CONFIGS = {
-    "default": {
-        "toolbar": [
-            "insertImage", "|",
-        ],
-    }
-}
 
 
 AUTHENTICATION_BACKENDS = [
