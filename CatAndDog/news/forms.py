@@ -1,8 +1,13 @@
-from django import forms
+from django.forms import ModelForm
 from .models import Post, Comment
 
 
-class PostForm(forms.ModelForm):
+class PostForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['category'].empty_label = 'Выберите категорию'
+
     class Meta:
         model = Post
         fields = [
@@ -14,7 +19,7 @@ class PostForm(forms.ModelForm):
         ]
 
 
-class CommentForm(forms.ModelForm):
+class CommentForm(ModelForm):
     model = Comment
     fields = ['text']
 
