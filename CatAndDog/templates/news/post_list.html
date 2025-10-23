@@ -39,13 +39,13 @@
                         <a class="page-pagination" href="?page={{ page_obj.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">Haзaд</a>
                     </li>
                 {% else %}
-                    <li><span class="page-pagination">Haзaд</span></li>
+                    <li><span class="page-active">Haзaд</span></li>
                 {% endif %}
 
                 <!-- Текущие страницы -->
                 {% for num in page_obj.paginator.page_range %}
                     {% if page_obj.number == num %}
-                        <li><span class="">{{ num }}</span></li>
+                        <li><span class="page-active">{{ num }}</span></li>
                     {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
                         <li>
                             <a class="page-pagination" href="?page={{ num }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">{{ num }}</a>
@@ -58,7 +58,7 @@
                         <a class="page-pagination" href="?page={{ page_obj.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{key}}={{value}}{% endif %}{% endfor %}">Bпеpед</a>
                     </li>
                 {% else %}
-                    <li><span class="page-pagination">Bпepeд</span></li>
+                    <li><span class="page-active">Bпepeд</span></li>
                 {% endif %}
             </ul>
         </div>
