@@ -82,8 +82,8 @@ def like(request, pk):
 
 
 class PostComment(LoginRequiredMixin, CreateView):
-    form_class = CommentForm
     model = Comment
+    form_class = CommentForm
     template_name = 'news/comment.html'
 
     def form_valid(self, form):
