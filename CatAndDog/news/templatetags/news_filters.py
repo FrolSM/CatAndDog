@@ -8,5 +8,5 @@ censor_list = ['анус', 'аборт', 'бздун', 'беспезды', 'бз
 @register.filter()
 def censor(value):
     for word in censor_list:
-        value = value.replace(word[1:], '*' * len(word[1:]))
+        value = value.replace(word, word[0]+'*' * len(word[1:]))
     return value
