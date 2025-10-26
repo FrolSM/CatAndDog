@@ -1,10 +1,11 @@
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django_filters.views import FilterView
 from .filters import PostFilter
 from .models import *
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 
 class PostsList(FilterView):
@@ -78,3 +79,19 @@ def like(request, pk):
 #     post.dislike()
 #     post.save()
 #     return render(request, 'flatpages/post.html', {'post': post})
+
+
+class PostComment(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'news/comment.html'
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.user = self.request.user
+        comment.post = Post.objects.get(pk=self.kwargs['pk'])
+        comment.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'pk': self.kwargs['pk']})

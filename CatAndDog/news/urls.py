@@ -9,4 +9,5 @@ urlpatterns = [
     path('pets/', PetsList.as_view(), name='pets_list'),
     path('<int:pk>/like/', like, name='like'),
     # path('<int:pk>/dislike/', dislike, name='dislike'),
+    path('<int:pk>/comment/', PostComment.as_view(), name='post_comment'),
 ]

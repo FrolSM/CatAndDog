@@ -15,7 +15,15 @@
         <h5>{{ post.text|censor }}</h5>
         <div class="like">
             <a href="{% url 'like' post.pk %}"> Лайк <i class="fa-regular fa-thumbs-up"></i> {{ post.rating }}</a>
-            <a href=""> Коментировать <i class="fa-regular fa-comment"></i></a>
+            <a href="{% url 'post_comment' post.pk %}"> Коментировать <i class="fa-regular fa-comment"></i></a>
+        </div>
+        <br>
+        <div class="comment">
+            <h3>Комментарии:</h3>
+            {% for comment in post.comment_set.all %}
+            <p> Автор комментария: "{{ comment.user }}" Время: {{ post.time }}</p>
+            <p> {{ comment.text }}</p>
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}
