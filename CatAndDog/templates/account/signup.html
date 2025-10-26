@@ -5,31 +5,33 @@
 {% endblock title %}
 {% block content %}
     <div class="account">
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% url 'account_signup' as action_url %}
-        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-            {% slot body %}
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
+        <div class="filter-form">
+            {% if not SOCIALACCOUNT_ONLY %}
+                {% url 'account_signup' as action_url %}
+                {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+                    {% slot body %}
+                        {% csrf_token %}
+                        {% element fields form=form unlabeled=True %}
+                        {% endelement %}
+                        {{ redirect_field }}
+                    {% endslot %}
+                    {% slot actions %}
+                        <button type="submit" class="btn btn-outline-dark" style="width: 200px">
+                            {% trans "Sign Up" %}
+                        </button>
+                    {% endslot %}
                 {% endelement %}
-                {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                <button type="submit" class="btn btn-outline-dark" style="width: 200px">
-                    {% trans "Sign Up" %}
-                </button>
-            {% endslot %}
-        {% endelement %}
-    {% endif %}
-    {% if PASSKEY_SIGNUP_ENABLED %}
-        {% element hr %}
-        {% endelement %}
-        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
-            {% trans "Sign up using a passkey" %}
-        {% endelement %}
-    {% endif %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
+            {% endif %}
+            {% if PASSKEY_SIGNUP_ENABLED %}
+                {% element hr %}
+                {% endelement %}
+                {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
+                    {% trans "Sign up using a passkey" %}
+                {% endelement %}
+            {% endif %}
+            {% if SOCIALACCOUNT_ENABLED %}
+                {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+            {% endif %}
         </div>
+    </div>
 {% endblock content %}
