@@ -15,7 +15,7 @@
         <h5>{{ post.text|censor }}</h5>
         <div class="like">
             <a href="{% url 'like' post.pk %}"> Лайк <i class="fa-regular fa-thumbs-up"></i> {{ post.rating }}</a>
-            <a href="{% url 'post_comment' post.pk %}"> Коментировать <i class="fa-regular fa-comment"></i></a>
+            <a href="{% url 'post_comment' post.pk %}"> Комментировать <i class="fa-regular fa-comment"></i></a>
         </div>
         <br>
         <div class="comment">
