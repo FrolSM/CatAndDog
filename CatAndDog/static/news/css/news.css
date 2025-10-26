@@ -58,13 +58,13 @@ main .features {
 }
 
 main .features .video {
-    border: 4px solid #48280f;
-    border-radius: 32px;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
 }
 
 main .features .img_list {
-    border: 4px solid #48280f;
-    border-radius: 32px;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
 }
 
 main .features .list_title h3 {
@@ -77,13 +77,13 @@ main .features .list_title h3:hover {
 }
 
 main .features h1 {font-size: 50px;} /* размер шрифта */
-main .features p {max-width: 400px; margin: 20px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
+main .features p {max-width: 400px; margin: 10px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
 
 
 a { text-decoration: none; }
 
  /* тест настройка */
-main .features a {
+main .features h3 a {
     padding: 20; /* отступы */
     color: #48280f; /* цвет шрифта */
     display: block; /* блочные елементы */
@@ -96,13 +96,13 @@ main .btn-primary {
 
 ul { list-style-type: none; }  /* убрал точки из контента */
 
-.alert-warning {
+/*.alert-warning {
     float: left;
     clear: both;
     width: 700px;
     margin: 20px 34%;
     text-align: left;
-}
+} не понял откуда код, позже убрать как разберусь */
 
 main .account {
     float: left; /* позиция */
@@ -156,14 +156,14 @@ main .postdeteil h5 {max-width: 1000px; margin: 20px auto;}
 main .postdeteil img {
     width: 400px;
     height: 500px;
-    border: 4px solid #48280f;
-    border-radius: 32px;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
 }
 
 main .postdeteil video {
     width: 500px;
-    border: 4px solid #48280f;
-    border-radius: 32px;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
 }
 main .like a {
     display: inline-block;
@@ -172,8 +172,8 @@ main .like a {
     margin: auto;
     width: 200px;
     height: 36px;
-    border: 3px solid #48280f;
-    border-radius: 32px;
+    border: 3px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
 }
 
 
@@ -186,8 +186,116 @@ main .pets1 {
 }
 
 
-main .pagination {
-    margin: auto;
-    border: 4px solid #48280f;
-    border-radius: 32px;
+.filter-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+main .features .filter-form p{
+    width: 300px;
+    font-size: 25px;
+    margin-top: 5px;
+
+}
+
+.filter-form input:not([type='submit']),
+.filter-form select {
+    width: 100%;
+    box-sizing:border-box;
+    background: #e2d6c1;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+}
+
+.filter-form input[type='submit']{
+    width: auto;
+    font-size: 20px;
+    background: #eca646;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+}
+
+.form-create{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main .features .form-create p{
+    width: 350px;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.form-create input:not([type='submit']),
+.form-create select {
+    color: #48280f;
+    width: 100%;
+    background: #e2d6c1;
+    box-sizing:border-box;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+}
+
+.form-create input[type='submit']{
+    width: auto;
+    font-size: 20px;
+    background: #eca646;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+}
+
+main .features .form-create p textarea{
+    width: 350px;
+    font-size: 20px;
+    margin-top: 5px;
+    background: #e2d6c1;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+}
+
+main .about {
+    float: left; /* позиция */
+    color: #fbfbf1; /* цвет */
+    margin-top: 100px; /* отступ сверху */
+    text-align: center; /* расположение по центру */
+    width: 100%; /* ширина */
+}
+
+main .about p {
+    font-size: 25px; /* размер шрифта */
+    max-width: 1000px; /* ширина 1000 */
+    margin: 10px auto; /*отступ сверху и снизу 10 по бокам авто*/
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination ul {
+    display: flex;
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+    padding-left: 0px; /* убирает отспуп слева */
+}
+
+.pagination ul li {
+    padding: 10px; /* отступы */
+}
+
+.page-pagination {
+    color: #48280f; /* цвет текста */
+    border: 3px solid #48280f; /* граница элемента,толщиной 3рх ,сплошная линия  */
+    border-radius: 30px; /* закругление границ элемента */
+    font-size: 20px; /* размер текста */
+    padding: 2.5;  /* отступы */
+}
+.page-active {
+    color: #e2d6c1; /* цвет текста */
+    border: 3px dotted #e2d6c1; /* граница элемента,толщиной 3рх ,сплошная линия  */
+    border-radius: 30px; /* закругление границ элемента */
+    font-size: 20px; /* размер текста */
+    padding: 2.5;  /* отступы */
+}
+
