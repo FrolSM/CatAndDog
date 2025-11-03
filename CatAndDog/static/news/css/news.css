@@ -49,10 +49,15 @@ nav ul li:hover, nav ul a:hover {
 
 }
 
+main {
+    margin-top: 100px; /* отступ сверху */
+    text-align: center; /* расположение по центру */
+}
+
+
 main .features {
     float: left; /* позиция */
     color: #fbfbf1; /* цвет */
-    margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
 }
@@ -107,7 +112,6 @@ ul { list-style-type: none; }  /* убрал точки из контента */
 main .account {
     float: left; /* позиция */
     color: #fff; /* цвет */
-    margin-top: 150px; /* отступ сверху */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
 }
@@ -148,7 +152,6 @@ footer ul a {
 
 main .postdeteil {
     color: #fbfbf1; /* цвет */
-    margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
     min-width: 1650px;
@@ -183,7 +186,6 @@ main .like a {
 main .pets1 {
     float: left; /* позиция */
     color: #fbfbf1; /* цвет */
-    margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
 }
@@ -261,7 +263,6 @@ main .features .form-create p textarea{
 main .about {
     float: left; /* позиция */
     color: #fbfbf1; /* цвет */
-    margin-top: 100px; /* отступ сверху */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
 }
