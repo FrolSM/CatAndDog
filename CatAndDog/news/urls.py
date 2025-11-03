@@ -7,6 +7,7 @@ urlpatterns = [
     path('post/create/', PostCreate.as_view(), name='post_create'),
     path('contacts/', contacts, name='contacts'),
     path('pets/', PetsList.as_view(), name='pets_list'),
-    path('<int:pk>/like/', like, name='like'),
-    # path('<int:pk>/dislike/', dislike, name='dislike'),
+    path('<int:pk>/comment/', PostComment.as_view(), name='post_comment'),
+    path('post/<int:post_id>/like/', like_post, name='like_post'),
+    path('post/<int:post_id>/count/', get_like_count, name='get_like_count'),
 ]

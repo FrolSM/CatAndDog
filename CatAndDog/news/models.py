@@ -29,15 +29,9 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Содержание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить видео')
-    rating = models.IntegerField(default=0)
 
-    def like(self):
-        self.rating += 1
-        self.save()
-
-    # def dislike(self):
-    #     self.rating -= 1
-    #     self.save()
+    def like_count(self):
+        return self.like_set.count()
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
@@ -53,6 +47,13 @@ class Comment(models.Model):
     text = models.TextField('Текст')
     time_comm = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = 'Коментарий'
+        verbose_name_plural = 'Коментарии'
+
+    def __str__(self):
+        return self.text
+
 
 class Pets(models.Model):
     name = models.CharField('Кличка', max_length=30, unique=True)
@@ -64,3 +65,14 @@ class Pets(models.Model):
         verbose_name = 'Питомец'
         verbose_name_plural = 'Питомцы'
 
+
+class Like(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')  # один пользователь — один лайк на пост
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.post.title}"

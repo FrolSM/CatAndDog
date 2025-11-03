@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
+    'allauth.socialaccount.providers.vk',
     'news',
     'sign',
     'django_filters',
@@ -147,6 +147,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -166,7 +167,18 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': os.getenv('YANDEX_SECRET'),
             'key': ''
         }
-    }
+    },
+    # 'vk': {
+    #     'APP': {
+    #         'client_id': os.getenv('VK_ID'),
+    #         'secret': os.getenv('VK_SECRET'),
+    #         'key': ''
+    #     },
+    #     'SCOPE': ['email'],  # запрашиваемые права
+    #     'AUTH_PARAMS': {'display': 'page'},
+    #     'METHOD': 'oauth2',
+    #     'VERIFIED_EMAIL': False
+    # }
 }
 
 
@@ -174,4 +186,4 @@ ACCOUNT_FORMS = {'signup': 'sign.forms.MyCustomSignupForm'}
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = '/'
-
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
