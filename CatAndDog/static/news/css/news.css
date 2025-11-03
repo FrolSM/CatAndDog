@@ -171,11 +171,18 @@ main .postdeteil video {
     border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
 }
+main .like {
+    display: block;
+    margin: auto;
+}
+
+
 main .like a {
     display: inline-block;
+    background: #eca646;
     color: #48280f;
     font-size: 20px;
-    margin: auto;
+    margin: 10px;
     width: 200px;
     height: 36px;
     border: 3px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
@@ -303,3 +310,17 @@ main .about p {
     padding: 2.5;  /* отступы */
 }
 
+.like-btn {
+    margin: 10px;
+    border: 3px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+    font-size: 18px; /* размер текста */
+    background: #eca646;
+}
+
+.like-count {
+    margin: 10px;
+    color: #48280f;
+    font-size: 18px;
+    padding: 2px;
+}

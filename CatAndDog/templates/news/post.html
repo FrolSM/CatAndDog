@@ -14,44 +14,41 @@
         {% endif %}
         <h5>{{ post.text|censor }}</h5>
         <div class="like">
-            <a href="{% url 'post_comment' post.pk %}"> Комментировать <i class="fa-regular fa-comment"></i></a>
-        </div>
-        <br>
-        <div class="post" data-post-id="{{ post.id }}">
-            <button class="like-btn" data-post-id="{{ post.id }}">
-                {% if request.user in post.liked_users %}
-                    Unlike
-                {% else %}
-                    Like
-                {% endif %}
-            </button>
+                <button class="like-btn" data-post-id="{{ post.id }}">
+                    {% if request.user in post.liked_users %}
+                        Убрать лайк
+                    {% else %}
+                        Лайк 👍
+                    {% endif %}
+                </button>
 
-            <span class="like-count" data-post-id="{{ post.id }}">
-                {{ post.like_count }}
-            </span>
-        </div>
+                <span class="like-count" data-post-id="{{ post.id }}">
+                    {{ post.like_count }}
+                </span>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-        $(document).ready(function() {
-            $('.like-btn').click(function() {
-                var postId = $(this).data('post-id');
-                $.ajax({
-                    url: `/post/${postId}/like/`,
-                    type: 'POST',
-                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                    success: function(response) {
-                        // Обновляем текст кнопки
-                        $(`.like-btn[data-post-id="${postId}"]`).text(
-                            response.liked ? 'Unlike' : 'Like'
-                        );
-                        // Обновляем счётчик
-                        $(`.like-count[data-post-id="${postId}"]`).text(response.count);
-                    }
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+            $(document).ready(function() {
+                $('.like-btn').click(function() {
+                    var postId = $(this).data('post-id');
+                    $.ajax({
+                        url: `/post/${postId}/like/`,
+                        type: 'POST',
+                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                        success: function(response) {
+                            // Обновляем текст кнопки
+                            $(`.like-btn[data-post-id="${postId}"]`).text(
+                                response.liked ? 'Убрать лайк' : 'Лайк 👍'
+                            );
+                            // Обновляем счётчик
+                            $(`.like-count[data-post-id="${postId}"]`).text(response.count);
+                        }
+                    });
                 });
             });
-        });
-        </script>
+            </script>
+            <a href="{% url 'post_comment' post.pk %}"> Комментировать <i class="fa-regular fa-comment"></i></a>
+        </div>
         <br>
         <div class="comment">
             <h3>Комментарии:</h3>
