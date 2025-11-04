@@ -324,3 +324,10 @@ main .about p {
     font-size: 18px;
     padding: 2px;
 }
+
+.comment hr {
+    width: 50%;        /* длина линии (50% от контейнера) */
+    margin: 10px auto; /* отступы сверху/снизу 10px; auto — центрирует */
+    border: none;
+    border-top: 1px solid #ccc; /* стиль линии */
+}
