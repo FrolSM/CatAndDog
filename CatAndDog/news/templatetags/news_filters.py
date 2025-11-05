@@ -10,3 +10,8 @@ def censor(value):
     for word in censor_list:
         value = value.replace(word, word[0]+'*' * len(word[1:]))
     return value
+
+
+@register.filter
+def in_group(user, group_name):
+    return user.groups.filter(name=group_name).exists()
