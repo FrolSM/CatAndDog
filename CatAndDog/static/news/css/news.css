@@ -94,6 +94,14 @@ main .features h3 a {
     display: block; /* блочные елементы */
 }
 
+main .features a {
+    color: #eca646;
+}
+
+main .features h4 {
+    color: #48280f;
+}
+
 main .btn-primary {
     background-color: #eca646; /* цвет кнопки */
     width: 200px;
