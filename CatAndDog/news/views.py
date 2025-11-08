@@ -12,11 +12,14 @@ from django.contrib.auth.decorators import login_required
 
 class PostsList(FilterView):
     model = Post
-    ordering = '-time'
+    # ordering = '-time'
     context_object_name = 'posts'
     template_name = 'news/post_list.html'
     paginate_by = 5
     filterset_class = PostFilter
+
+    def get_queryset(self):
+        return Post.published.all().order_by('-time')
 
     # как работает фильтр(но в проекте ипользуем FilterView)
     # def get_queryset(self):
