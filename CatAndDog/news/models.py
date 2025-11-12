@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 class PublishedManager(models.Manager):
@@ -25,21 +26,31 @@ class Post(models.Model):
 
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(verbose_name='Заголовок', max_length=50)
+    title = models.CharField(verbose_name='Заголовок', max_length=100)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Содержание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить видео')
     is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
+    slug = models.SlugField(unique=True, db_index=True, blank=True, max_length=100)
 
     objects = models.Manager()
     published = PublishedManager()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            self.slug = base_slug
+            # Проверяем уникальность
+            while Post.objects.filter(slug=self.slug).exists():
+                self.slug = f"{base_slug}-{Post.objects.filter(slug__startswith=base_slug).count() + 1}"
+        super().save(*args, **kwargs)
 
     def like_count(self):
         return self.like_set.count()
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        return reverse('post_detail', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Новость'

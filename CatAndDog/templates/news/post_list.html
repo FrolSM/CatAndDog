@@ -15,7 +15,7 @@
             {% for post in posts %}
 <!--                <p>Категория: {{ post.category }}<br>Пользователь: {{ post.author }} Дата: {{ post.time }}</p>-->
                 <div class="list_title">
-                    <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
+                    <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
                 </div>
                 {% if post.photo %}
                     <img class="img_list" src="{{ post.photo.url }}">
