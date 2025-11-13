@@ -51,15 +51,19 @@
         </div>
         <br>
         <div class="comment">
-            <h3>Комментарии:</h3>
-            <hr>
-            {% for comment in post.comment_set.all %}
-            <p> Автор комментария: "{{ comment.user }}" Время: {{ comment.time_comm }}</p>
-            <h5> {{ comment.text|censor }}</h5>
-            {% if not forloop.last %}
+            {% if post.comment_set %}
+                <h3>Комментарии:</h3>
                 <hr>
+                {% for comment in post.comment_set.all %}
+                <p> Автор комментария: "{{ comment.user }}" Время: {{ comment.time_comm }}</p>
+                <h5> {{ comment.text|censor }}</h5>
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                <p class="no-comments">Комментариев пока нет. Будьте первым!</p>
             {% endif %}
-            {% endfor %}
         </div>
     </div>
 {% endblock content %}

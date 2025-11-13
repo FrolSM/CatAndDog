@@ -10,4 +10,3 @@ class MyModelAdmin(admin.ModelAdmin):
 admin.site.register(Category)
 admin.site.register(Pets)
 admin.site.register(Comment)
-
