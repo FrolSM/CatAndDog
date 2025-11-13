@@ -51,7 +51,7 @@
         </div>
         <br>
         <div class="comment">
-            {% if post.comment_set %}
+            {% if post.comment_set.exists %}
                 <h3>Комментарии:</h3>
                 <hr>
                 {% for comment in post.comment_set.all %}
@@ -62,7 +62,7 @@
                 {% endif %}
                 {% endfor %}
             {% else %}
-                <p class="no-comments">Комментариев пока нет. Будьте первым!</p>
+                <p class="no-comments"> Комментариев пока нет. Будьте первым!</p>
             {% endif %}
         </div>
     </div>
