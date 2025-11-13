@@ -1,13 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class Users(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=Post.Status.PUBLISHED)
 
 
 class Category(models.Model):
@@ -22,6 +19,10 @@ class Category(models.Model):
 
 
 class Post(models.Model):
+    class Status(models.IntegerChoices):
+        DRAFT = 0, 'Черновик'
+        PUBLISHED = 1, 'Опубликовано'
+
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
     title = models.CharField(verbose_name='Заголовок', max_length=50)
@@ -29,6 +30,10 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Содержание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить видео')
+    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
+
+    objects = models.Manager()
+    published = PublishedManager()
 
     def like_count(self):
         return self.like_set.count()
