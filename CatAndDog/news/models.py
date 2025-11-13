@@ -33,7 +33,7 @@ class Post(models.Model):
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить видео')
     is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
-    slug = AutoSlugField(populate_from='title', unique=True, always_update=True)
+    slug = AutoSlugField(populate_from='title', unique=True, always_update=True)  # добавить db_index=True
 
     objects = models.Manager()
     published = PublishedManager()
