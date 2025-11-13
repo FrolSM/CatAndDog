@@ -1,5 +1,7 @@
 from django.db import models
 from django.urls import reverse
+from autoslug import AutoSlugField
+from unidecode import unidecode
 
 
 class PublishedManager(models.Manager):
@@ -25,21 +27,30 @@ class Post(models.Model):
 
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(verbose_name='Заголовок', max_length=50)
+    title = models.CharField(verbose_name='Заголовок', max_length=100)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Содержание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить видео')
-    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
+    is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
+    slug = AutoSlugField(populate_from='title', unique=True, always_update=True)
 
     objects = models.Manager()
     published = PublishedManager()
+
+    def save(self, *args, **kwargs):
+        if self.title and not self.slug:
+            self.slug = unidecode(self.title)
+        super().save(*args, **kwargs)
 
     def like_count(self):
         return self.like_set.count()
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        return reverse('post_detail', kwargs={'slug': self.slug})
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = 'Новость'
