@@ -9,15 +9,15 @@ nav {
     position: fixed; /* прикрепление панели */
     background: #fbfbf1; /*цвет панели сверху */
     padding: 2.5; /* отступы */
-    height: 90px; /* высота блока */
+    height: 83px; /* высота блока */
     width: 100%; /* ширина блока */
-    min-width: 1650px;
+    min-width: 1280px;
     color: #48280f; /* цвет текста */
     border-bottom: 5px solid #48280f;
 }
 
 nav img {
-    width: 80px; /* ширина картинки */
+    width: 75px; /* ширина картинки */
     float: left; /* расположение */
 }
 
@@ -31,21 +31,21 @@ nav .logo {
 nav ul {
     list-style: none;
     float: right;
-    font-size: 24px;
+    font-size: 22px;
 }
 
 nav ul li {
     color: #eca646; /* цвет шрифта */
     display: inline-block; /* строчно-блочное отображение */
     margin-top: 23px; /* отступ сверху */
-    margin-right: 50px; /* отступ справа */
+    margin-right: 25px; /* отступ справа */
     transition: transform .6s ease; /* плавность для transform */
 }
 
 nav ul li:hover, nav ul a:hover {
     color: #48280f; /* цвет при наведении */
     text-decoration: none; /* убрана полоса при наведении */
-    transform: scale(1.05); /* увелечение при наведение */
+    transform: scale(1.30); /* увелечение при наведение */
 
 }
 
@@ -75,10 +75,11 @@ main .features .img_list {
 main .features .list_title h3 {
     font-size: 30px;
     display: inline-block;
+    transition: transform .6s ease;
 }
 
 main .features .list_title h3:hover {
-    transform: scale(1.10);
+    transform: scale(1.20);
 }
 
 main .features h1 {font-size: 50px;} /* размер шрифта */
