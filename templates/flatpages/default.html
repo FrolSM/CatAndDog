@@ -14,31 +14,40 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css">
 </head>
 <body>
-    <nav class="static-top">
-        <img src="{% static 'news/img/logo.jpg' %}" alt="logo">
-        <span class="logo"> CatAndDog</span>
-        <ul>
-            <a href="{% url 'post_list' %}"><li><i class="fa-solid fa-newspaper"></i> Новости </li></a>
-            {% if request.user|in_group:"authors" %}
-                <a href="{% url 'post_create' %}"><li><i class="fa-solid fa-plus"></i> Создать новость </li></a>
-            {% else %}
-                <a href=""><li>Стать автором</li></a>
-            {% endif %}
+    <header>
+        <nav>
+            <div class="nav-header">
+<!--            <img src="{% static 'news/img/logo.jpg' %}" alt="logo">-->
+                <a href="#" class="logo">CatAndDog</a>
+                <button class="nav-btn">
+                    <i class="fas fa-bars open-menu"></i>
+                    <i class="fas fa-times close-menu"></i>
+                </button>
+            </div>
+            <ul class="navbar">
+                <li><a href="{% url 'post_list' %}" class="nav-link"><i class="fa-solid fa-newspaper"></i> Новости </a></li>
+                {% if request.user|in_group:"authors" %}
+                    <li><a href="{% url 'post_create' %}" class="nav-link"><i class="fa-solid fa-plus"></i> Создать новость </a></li>
+                {% else %}
+                    <li><a href="" class="nav-link">Стать автором</a></li>
+                {% endif %}
 
-            <a href="{% url 'contacts' %}"><li><i class="fa-solid fa-address-book"></i> О нас </li></a>
-            <a href="{% url 'pets_list' %}"><li><i class="fa-solid fa-cat"></i> Наши питомцы <i class="fa-solid fa-dog"></i></li></a>
-            {% if user.is_authenticated %}
-            <a href="{% url 'profile' %}"><li><i class="fa-solid fa-user"></i> Профиль </li></a>
-            {% else %}
-            <a href="{% url 'account_login' %}"><li><i class="fa-solid fa-dungeon"></i> Войти </li></a>
-            {% endif %}
-            {% if user.is_authenticated %}
-            <a href="{% url 'account_logout' %}"><li><i class="fa-solid fa-door-open"></i> Выйти </li></a>
-            {% else %}
-            <a href="{% url 'account_signup' %}"><li><i class="fa-solid fa-user-plus"></i> Регистрация </li></a>
-            {% endif %}
-        </ul>
-    </nav>
+                <li><a href="{% url 'contacts' %}" class="nav-link"><i class="fa-solid fa-address-book"></i> О нас </a></li>
+                <li><a href="{% url 'pets_list' %}" class="nav-link"><i class="fa-solid fa-cat"></i> Наши питомцы <i class="fa-solid fa-dog"></i></a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}" class="nav-link"><i class="fa-solid fa-user"></i> Профиль </a></li>
+                {% else %}
+                <li><a href="{% url 'account_login' %}" class="nav-link"><i class="fa-solid fa-dungeon"></i> Войти </a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'account_logout' %}" class="nav-link"><i class="fa-solid fa-door-open"></i> Выйти </a></li>
+                {% else %}
+                <li><a href="{% url 'account_signup' %}" class="nav-link"><i class="fa-solid fa-user-plus"></i> Регистрация </a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <script src="{% static 'news/js/script.js' %}"></script>
     <main>
         {% block content %}
         {% endblock %}

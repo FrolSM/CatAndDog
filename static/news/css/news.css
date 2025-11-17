@@ -1,3 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    outline: 0;
+    text-decoration: none;
+    list-style: none;
+    text-transform: capitalize;
+    font-family: 'Poppins', sans-serif;
+    transition: all .3s;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
 body {
     background: #a18163; /* цвет контента */
     display: flex; /* Создаем гибкую структуру */
@@ -5,48 +23,92 @@ body {
     min-height: 100vh; /* Минимальная высота равна высоте вьюпорта */
 }
 
-nav {
-    position: fixed; /* прикрепление панели */
-    background: #fbfbf1; /*цвет панели сверху */
-    padding: 2.5; /* отступы */
-    height: 83px; /* высота блока */
-    width: 100%; /* ширина блока */
-    min-width: 1280px;
-    color: #48280f; /* цвет текста */
-    border-bottom: 5px solid #48280f;
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fbfbf1;
+    padding: 2rem;
 }
 
-nav img {
-    width: 75px; /* ширина картинки */
-    float: left; /* расположение */
+header nav {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-nav .logo {
-    font-size: 40px; /* размер шрифта */
-    font-weight: bold; /* жирный шрифт */
-    position: fixed; /* прикрепление */
-    top: 9px;
+header .nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-nav ul {
-    list-style: none;
-    float: right;
-    font-size: 22px;
+
+header .nav-header .logo {
+    color: #48280f;
+    font-size: 3rem;
+    font-weight: 800;
 }
 
-nav ul li {
-    color: #eca646; /* цвет шрифта */
-    display: inline-block; /* строчно-блочное отображение */
-    margin-top: 23px; /* отступ сверху */
-    margin-right: 25px; /* отступ справа */
-    transition: transform .6s ease; /* плавность для transform */
+header .nav-header .nav-btn {
+    background: none;
+    color: #48280f;
+    font-size: 2.5rem;
+    cursor: pointer;
 }
 
-nav ul li:hover, nav ul a:hover {
-    color: #48280f; /* цвет при наведении */
-    text-decoration: none; /* убрана полоса при наведении */
-    transform: scale(1.30); /* увелечение при наведение */
+header .nav-header .nav-btn .close-menu {
+    display: none;
+}
 
+header .navbar .nav-link {
+    font-size: 1.7rem;
+    color: #eca646;
+    padding: 1rem;
+    display: inline-block;
+    transition: all .3s ease-in;
+}
+
+header .navbar .nav-link:hover {
+    color: #48280f;
+}
+
+header .navbar {
+    text-align: center;
+    height: 0;
+    overflow: hidden;
+    transition: all .3s ease-in;
+}
+
+header .navbar.active {
+    height: 22rem;
+}
+
+header .nav-header .nav-btn.active .open-menu {
+    display: none;
+}
+
+header .nav-header .nav-btn.active .close-menu {
+    display: block;
+}
+
+@media screen and (min-width:768px) {
+    header nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header .navbar {
+        all: initial;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    header .nav-btn {
+        display: none;
+    }
 }
 
 main {
