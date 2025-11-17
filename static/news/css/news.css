@@ -6,13 +6,10 @@
     outline: 0;
     text-decoration: none;
     list-style: none;
-    text-transform: capitalize;
-    font-family: 'Poppins', sans-serif;
     transition: all .3s;
 }
 
 html {
-    font-size: 62.5%;
     overflow-x: hidden;
 }
 
@@ -29,11 +26,11 @@ header {
     left: 0;
     width: 100%;
     background-color: #fbfbf1;
-    padding: 2rem;
+    padding: 10px;
 }
 
 header nav {
-    max-width: 1200px;
+    max-width: 1700px;
     margin: 0 auto;
 }
 
@@ -47,7 +44,7 @@ header .nav-header {
 header .nav-header .logo {
     color: #48280f;
     font-size: 3rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 header .nav-header .nav-btn {
@@ -62,7 +59,7 @@ header .nav-header .nav-btn .close-menu {
 }
 
 header .navbar .nav-link {
-    font-size: 1.7rem;
+    font-size: 22px;
     color: #eca646;
     padding: 1rem;
     display: inline-block;
@@ -179,7 +176,14 @@ main .account {
     width: 100%; /* ширина */
 }
 main .account h1 {font-size: 50px;} /* размер шрифта */
-main .account p {max-width: 400px; margin: 20px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
+main .account p {
+    max-width: 400px; /* ширина 400 */
+    margin: 20px auto; /* отступ сверху и снизу 20 по бокам авто*/
+}
+
+main .account input {
+    padding: 2px 4px
+}
 
 main .account a {
     padding: 20; /* отступы */
@@ -189,6 +193,16 @@ main .account a {
 
 main .account button {
     color: #48280f;
+}
+
+main .account .exit button {
+    color: #48280f;
+    width: auto; /* ширина */
+    font-size: 20px; /* размер шрифта */
+    background: #eca646; /* фон */
+    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+    padding: 1px 6px;
 }
 
 main .account .vk {
@@ -267,11 +281,10 @@ main .pets1 {
     align-items: center;
 }
 
-main .features .filter-form p{
+main .features .filter-form p {
     width: 300px; /* ширина */
     font-size: 25px; /* размер шрифта */
     margin-top: 5px; /* внешний отступ */
-
 }
 
 .filter-form input:not([type='submit']),
@@ -281,6 +294,7 @@ main .features .filter-form p{
     background: #e2d6c1; /* фон */
     border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
+    padding: 0px 10px;
 }
 
 .filter-form input[type='submit']{
@@ -289,6 +303,7 @@ main .features .filter-form p{
     background: #eca646; /* фон */
     border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
+    padding: 2px 6px;
 }
 
 .form-create{
@@ -311,6 +326,7 @@ main .features .form-create p{
     box-sizing:border-box; /*  */
     border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
+    padding: 0px 10px;
 }
 
 .form-create input[type='submit']{
@@ -319,6 +335,7 @@ main .features .form-create p{
     background: #eca646; /* фон */
     border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
+    padding: 2px 6px;
 }
 
 main .features .form-create p textarea{
@@ -328,6 +345,7 @@ main .features .form-create p textarea{
     background: #e2d6c1; /* фон */
     border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
+    padding: 0px 10px;
 }
 
 main .about {
@@ -380,7 +398,9 @@ main .about p {
     border-radius: 32px; /* закругление границ элемента */
     font-size: 18px; /* размер текста */
     background: #eca646;
+    padding: 2px 6px;
 }
+
 
 .like-count {
     margin: 10px; /* внешний отступ со всех сторон */
