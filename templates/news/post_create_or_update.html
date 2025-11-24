@@ -1,15 +1,15 @@
 {% extends 'flatpages/default.html' %}
 
-{% block title %}Создание новости{% endblock %}
+{% block title %}{{ create_or_edit }} новости{% endblock %}
 {% block content %}
 <div class="features">
-    <h1>Создание новости</h1>
+    <h1>{{ create_or_edit }} новости</h1>
     <hr>
     <form action="" method="post" enctype="multipart/form-data" class="form-create">
         {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}
-        <h4>Перед созданием поста ознакомьтесь с <a href="{% url 'rules_creating_post' %}">ПРАВИЛАМИ</a></h4>
+        <h4>Перед {{ create_or_edit }} поста ознакомьтесь с <a href="{% url 'rules_creating_post' %}">ПРАВИЛАМИ</a></h4>
         <input type="submit" value="Сохранить" />
     </form>
 </div>

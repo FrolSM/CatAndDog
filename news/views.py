@@ -52,7 +52,12 @@ class PostDetail(DetailView):
 class PostCreate(UserPassesTestMixin, CreateView):
     form_class = PostForm
     model = Post
-    template_name = 'news/post_create.html'
+    template_name = 'news/post_create_or_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['create_or_edit'] = 'Добавление' if self.request.path == '/post/create/' else 'Редактирование'
+        return context
 
     def test_func(self):
         return self.request.user.groups.filter(name='authors').exists()
@@ -65,7 +70,12 @@ class PostCreate(UserPassesTestMixin, CreateView):
 class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
-    template_name = 'news/post_update.html'
+    template_name = 'news/post_create_or_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['create_or_edit'] = 'Добавление' if self.request.path == '/post/create/' else 'Редактирование'
+        return context
 
 
 class PostDelete(DeleteView):
