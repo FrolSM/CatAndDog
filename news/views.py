@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from django.utils.http import urlencode
 
 
 class PostsList(FilterView):
@@ -18,9 +19,18 @@ class PostsList(FilterView):
     template_name = 'news/post_list.html'
     paginate_by = 5
     filterset_class = PostFilter
+    cache_timeout = 120
 
     def get_queryset(self):
-        return Post.published.all().order_by('-time')
+        params = self.request.GET.dict()
+        cache_key = f'post-queryset-{urlencode(params)}' if params else 'post-queryset'
+
+        queryset = cache.get(cache_key)
+        if queryset is None:
+            queryset = Post.published.all().order_by('-time')
+            cache.set(cache_key, queryset, self.cache_timeout)
+
+        return queryset
 
     # как работает фильтр(но в проекте ипользуем FilterView)
     # def get_queryset(self):
@@ -38,14 +48,13 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'news/post.html'
     context_object_name = 'post'
+    cache_timeout = 120
 
     def get_object(self, *args, **kwargs):
-
         obj = cache.get(f'post-{self.kwargs["slug"]}', None)
         if not obj:
             obj = super().get_object(queryset=self.queryset)
-            cache.set(f'post-{self.kwargs["slug"]}', obj)
-
+            cache.set(f'post-{self.kwargs["slug"]}', obj, self.cache_timeout)
         return obj
 
 
@@ -82,7 +91,6 @@ class PostDelete(DeleteView):
     model = Post
     template_name = 'news/post_delete.html'
     success_url = reverse_lazy('post_list')
-    slug_field = 'slug'
 
 
 def contacts(request):

@@ -5,6 +5,8 @@ from django.dispatch import receiver
 from .models import Post
 
 
+# кеш
 @receiver([post_save, post_delete], sender=Post)
 def cache_post(sender, instance, *args, **kwargs):
-    cache.delete(f'post-{instance.pk}')
+    cache.delete(f'post-{instance.slug}')
+    cache.delete_pattern('post-queryset*')
