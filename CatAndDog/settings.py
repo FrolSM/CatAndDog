@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # это для localhost
 
 # Application definition
 
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
-    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.vk',  # это
     'news',
     'sign',
     'django_filters',
@@ -168,7 +168,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'key': ''
         }
     },
-    'vk': {
+    'vk': {  # этот блок целиком
         'APP': {
             'client_id': os.getenv('VK_CLIENT_ID'),
             'secret': os.getenv('VK_SECRET'),
