@@ -7,11 +7,14 @@
         class="btn btn-sm mb-2 py-2 px-4 d-inline-block align-items-center justify-content-center
             {% if provider.id == 'google' %} btn-outline-danger
             {% elif provider.id == 'yandex' %} btn-outline-dark
+            {% elif provider.id == 'vk' %} btn-outline-dark
             {% else %} btn-secondary
             {% endif %}"
        >
         {% if provider.id == "google" %}
         <i class="fa-brands fa-google"></i> Войти через Google
+        {% elif provider.id == "vk" %}
+        <i class="fa-brands fa-vk"></i> Войти через ВК
         {% elif provider.id == "yandex" %}
         <i class="fa-brands fa-yandex"></i> Войти через Яндекс
         {% else %}
