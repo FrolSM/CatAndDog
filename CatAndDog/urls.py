@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include("news.urls")),
     path('sign/', include('sign.urls')),
     path('accounts/', include('allauth.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 if settings.DEBUG:
