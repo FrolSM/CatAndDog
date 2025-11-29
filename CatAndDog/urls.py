@@ -38,3 +38,6 @@ if settings.DEBUG:
 
 urlpatterns += static(settings.STATIC_URL)
 urlpatterns += static(settings.MEDIA_URL)
+
+admin.site.site_header = 'Панель администрирования'
+admin.site.index_title = 'Сайт питомника ""'
