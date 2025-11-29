@@ -27,7 +27,7 @@ class Post(models.Model):
 
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(verbose_name='Заголовок', max_length=100)
+    title = models.CharField(verbose_name='Заголовок', max_length=100, unique=True)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Содержание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
