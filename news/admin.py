@@ -3,7 +3,7 @@ from .models import Post, Category, Pets, Comment
 
 
 @admin.register(Post)
-class MyModelAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
