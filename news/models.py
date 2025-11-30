@@ -26,14 +26,15 @@ class Post(models.Model):
         PUBLISHED = 1, 'Опубликовано'
 
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(verbose_name='Время создания', auto_now_add=True)
     title = models.CharField(verbose_name='Заголовок', max_length=100, unique=True)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Содержание')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить фото')
     video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True, verbose_name='Добавить видео')
-    is_published = models.BooleanField(choices=Status.choices, default=Status.PUBLISHED)
-    slug = AutoSlugField(populate_from='title', unique=True, always_update=True)
+    is_published = models.BooleanField(verbose_name='Статус', choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
+                                       default=Status.PUBLISHED)
+    slug = AutoSlugField(editable=False, populate_from='title', unique=True, always_update=True)
 
     objects = models.Manager()
     published = PublishedManager()
