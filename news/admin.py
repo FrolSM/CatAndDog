@@ -23,6 +23,11 @@ class PostAdmin(admin.ModelAdmin):
         )
         return form
 
+    # добавление пользовательского поля в админку
+    # @admin.display(description='Имя поля', ordering='сортировка по полю из модели')
+    # def my_func(self, post: Post):
+    #     return f'описание поля {len(post.text)} и тд.'
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
