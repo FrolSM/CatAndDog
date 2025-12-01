@@ -7,7 +7,7 @@ from .models import Post, Category, Pets, Comment
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     fields = ['title', 'text', 'author', 'category', 'photo', 'video']
-    list_display = ('id', 'title', 'time', 'is_published', 'category')
+    list_display = ('id', 'title', 'time', 'is_published', 'category', 'my_func')
     list_display_links = ('id', 'title')
     ordering = ['-time', 'title']
     list_editable = ('is_published',)
