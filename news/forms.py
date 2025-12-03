@@ -17,12 +17,7 @@ class PostForm(forms.ModelForm):
             'video',
             'category',
         ]
-        # имена для полей в форме(но я уже написал в моделях)
-        # labels = {
-        #     'title': '',
-        #     'text': '',
-        #     'category': '',
-        # }
+
         widgets = {
             'text': forms.Textarea(attrs={'class': 'form-textarea', 'rows': 6, })
         }
@@ -32,4 +27,3 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text']
-
