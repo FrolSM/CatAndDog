@@ -39,12 +39,12 @@ class PostForm(forms.ModelForm):
             'text': forms.Textarea(attrs={'class': 'form-textarea', 'rows': 6, })
         }
 
-    def clean(self):
-        title = self.cleaned_data.get('title')
-        ALLOWED_CHARS = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789- '
-
-        if not (set(title) <= set(ALLOWED_CHARS)):
-            raise ValidationError('Должны присутствовать только русские символы, цифры, дефис и пробел.')
+    # def clean(self):
+    #     title = self.cleaned_data.get('title')
+    #     ALLOWED_CHARS = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя0123456789- '
+    #
+    #     if not (set(title) <= set(ALLOWED_CHARS)):
+    #         raise ValidationError('Должны присутствовать только русские символы, цифры, дефис и пробел.')
 
 
 class CommentForm(forms.ModelForm):
