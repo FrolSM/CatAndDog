@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib import admin, messages
+from django.utils.safestring import mark_safe
+
 from .models import Post, Category, Pets, Comment
 
 
@@ -7,7 +9,7 @@ from .models import Post, Category, Pets, Comment
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     fields = ['title', 'text', 'category', 'photo', 'video']  # поля формы создания и редакции
-    list_display = ('id', 'title', 'time', 'is_published', 'category')  # поля отображаемые в списке объектов
+    list_display = ('id', 'title', 'post_photo_video', 'is_published', 'category')  # поля отображаемые в списке объектов
     list_display_links = ('id', 'title')  # поля линк
     ordering = ['-time', 'title']  # сортировка
     list_editable = ('is_published',)  # разрешение редактировать прям на странице списка
@@ -33,10 +35,13 @@ class PostAdmin(admin.ModelAdmin):
         )
         return form
 
-    # добавление пользовательского поля в админку
-    # @admin.display(description='Имя поля', ordering='сортировка по полю из модели')
-    # def my_func(self, post: Post):
-    #     return f'описание поля {len(post.text)} и тд.'
+    @admin.display(description='Фото или видео', ordering='')
+    def post_photo_video(self, post: Post):
+        if post.photo:
+            return mark_safe(f'<img src="{post.photo.url}" width=100>')
+        elif post.video:
+            return mark_safe(f'<img src="{post.video.url}" width=100>')
+        return 'Медиа отсутствует'
 
     @admin.action(description='Опубликовать выбранные записи')
     def set_published(self, request, queryset):
