@@ -5,8 +5,10 @@
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/venvCD" />
       <excludeFolder url="file://$MODULE_DIR$/venvCD1" />
+      <excludeFolder url="file://$MODULE_DIR$/venvCD" />
+      <excludeFolder url="file://$MODULE_DIR$/venvCaD" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.12 (CatAndDog)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 CatAndDog" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
