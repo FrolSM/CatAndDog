@@ -5,7 +5,6 @@ from .filters import PostFilter
 from .models import *
 from .forms import PostForm, CommentForm
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
@@ -60,7 +59,7 @@ class PostDetail(DetailView):
         return obj
 
 
-class PostCreate(UserPassesTestMixin, CreateView):
+class PostCreate(CreateView):
     form_class = PostForm
     model = Post
     template_name = 'news/post_create_or_update.html'
@@ -105,7 +104,7 @@ class PetsList(ListView):
     template_name = 'news/pets.html'
 
 
-class PostComment(LoginRequiredMixin, CreateView):
+class PostComment(CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'news/comment.html'
