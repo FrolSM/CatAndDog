@@ -46,10 +46,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'allauth.socialaccount.providers.vk',  # это
     'news',
-    'sign',
+    'users',
     'django_filters',
     'autoslug',
     'debug_toolbar',
+    'django_rename_app',
 ]
 
 MIDDLEWARE = [
@@ -185,7 +186,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-ACCOUNT_FORMS = {'signup': 'sign.forms.MyCustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'users.forms.MyCustomSignupForm'}
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'profile'
 LOGOUT_REDIRECT_URL = '/'
