@@ -189,7 +189,7 @@ SOCIALACCOUNT_PROVIDERS = {
 ACCOUNT_FORMS = {'signup': 'users.forms.MyCustomSignupForm'}
 LOGIN_URL = 'account_login'
 LOGIN_REDIRECT_URL = 'profile'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'post_list'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
 
 # для включения кеша раскомментить
