@@ -155,6 +155,7 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = (IsAdminUser, )
+    filterset_fields = ('author', 'category', 'is_published')
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
