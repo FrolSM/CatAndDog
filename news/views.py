@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.utils.http import urlencode
 from .serializers import PostSerializer
+from django.views.decorators.http import require_POST
 
 
 class PostsList(FilterView):
@@ -53,6 +54,8 @@ class PostDetail(DetailView):
     template_name = 'news/post.html'
     context_object_name = 'post'
     cache_timeout = 120
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
 
 # кеширование одного поста
     def get_object(self, *args, **kwargs):
@@ -70,7 +73,7 @@ class PostCreate(UserPassesTestMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['create_or_edit'] = 'Добавление' if self.request.path == '/post/create/' else 'Редактирование'
+        context['create_or_edit'] = 'Добавление' if isinstance(self, CreateView) else 'Редактирование'
         return context
 
     def test_func(self):
@@ -88,7 +91,7 @@ class PostUpdate(UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['create_or_edit'] = 'Добавление' if self.request.path == '/post/create/' else 'Редактирование'
+        context['create_or_edit'] = 'Добавление' if isinstance(self, CreateView) else 'Редактирование'
         return context
 
     def test_func(self):
@@ -130,6 +133,7 @@ class PostComment(LoginRequiredMixin, CreateView):
         return reverse_lazy('post_detail', kwargs={'slug': self.object.post.slug})
 
 
+@require_POST
 @login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
