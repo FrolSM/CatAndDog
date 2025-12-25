@@ -8,15 +8,15 @@ from .models import Post, Category, Pets, Comment
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    fields = ['title', 'text', 'category', 'photo', 'video','post_photo_video']  # поля формы создания и редакции
+    fields = ['author', 'title', 'text', 'category', 'photo', 'video','post_photo_video']  # поля формы создания и редакции
     list_display = ('id', 'title', 'post_photo_video', 'is_published', 'category')  # поля отображаемые в списке объектов
     list_display_links = ('id', 'title')  # поля линк
     ordering = ['-time', 'title']  # сортировка
     list_editable = ('is_published',)  # разрешение редактировать прям на странице списка
     list_per_page = 10  # пагинация
     actions = ['set_published', 'set_draft']  # доп действия
-    list_filter = ['category__name', 'is_published']  # фильтрация по полям
-    readonly_fields = ['post_photo_video']  # поля неизменяемое (видное в форме)
+    list_filter = ['category', 'is_published']  # фильтрация по полям
+    readonly_fields = ('post_photo_video', 'author')  # поля неизменяемое (видное в форме)
 
     def save_model(self, request, obj, form, change):
         if not change:  # Только при создании новой записи
@@ -35,7 +35,7 @@ class PostAdmin(admin.ModelAdmin):
         )
         return form
 
-    @admin.display(description='Фото или видео', ordering='')
+    @admin.display(description='Фото или видео')
     def post_photo_video(self, post: Post):
         if post.photo:
             return mark_safe(f'<img src="{post.photo.url}" width=100>')
@@ -54,7 +54,7 @@ class PostAdmin(admin.ModelAdmin):
         count = queryset.update(is_published=Post.Status.PUBLISHED)
         self.message_user(request, f'Изменено {count} записей')
 
-    @admin.action(description='Снять с пуюликации выбранные записи')
+    @admin.action(description='Снять с публикации выбранные записи')
     def set_draft(self, request, queryset):
         count = queryset.update(is_published=Post.Status.DRAFT)
         self.message_user(request, f'{count} записей снято с публикации', messages.WARNING)
