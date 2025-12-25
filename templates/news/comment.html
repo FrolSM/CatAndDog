@@ -1,13 +1,17 @@
 {% extends 'flatpages/default.html' %}
 
-
+{% block title %}Комментарий к посту {% endblock %}
 {% block content %}
 <div class="features">
     <h1>Комментарий к посту</h1>
-    <form action="" method="post" class="form-create">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Отправить" />
-    </form>
+    {% if user.is_authenticated %}
+        <form action="" method="post" class="form-create">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Отправить" />
+        </form>
+    {% else %}
+        <p>Чтобы оставить комментарий, необходимо войти.</p>
+    {% endif %}
 </div>
 {% endblock content %}

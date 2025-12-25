@@ -50,6 +50,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'slug': self.slug})
 
+    def is_liked_by(self, user):
+        return self.likes.filter(user=user).exists()
+
     def __str__(self):
         return self.title
 

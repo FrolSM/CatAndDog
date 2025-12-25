@@ -6,14 +6,14 @@ from rest_framework.viewsets import ModelViewSet
 from .filters import PostFilter
 from .models import *
 from .forms import PostForm, CommentForm
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.utils.http import urlencode
 from .serializers import PostSerializer
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 
 
 class PostsList(FilterView):
@@ -123,11 +123,11 @@ class PostComment(LoginRequiredMixin, CreateView):
     template_name = 'news/comment.html'
 
     def form_valid(self, form):
-        comment = form.save(commit=False)
-        comment.user = self.request.user
-        comment.post = Post.objects.get(pk=self.kwargs['pk'])
-        comment.save()
-        return super().form_valid(form)
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.post = get_object_or_404(Post, slug=self.kwargs['slug'])
+        self.object.save()
+        return redirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'slug': self.object.post.slug})
@@ -135,8 +135,8 @@ class PostComment(LoginRequiredMixin, CreateView):
 
 @require_POST
 @login_required
-def like_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+def like_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if not created:
         like.delete()  # если лайк уже был — удаляем (toggle)
@@ -145,9 +145,9 @@ def like_post(request, post_id):
         'count': post.like_count()
     })
 
-
-def get_like_count(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+@require_GET
+def get_like_count(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     return JsonResponse({'count': post.like_count()})
 
 
