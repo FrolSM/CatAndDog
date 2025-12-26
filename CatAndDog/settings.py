@@ -169,6 +169,9 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_LOGIN_METHODS = {'username', 'email'}
 ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_FORMS = {
+    'signup': 'users.forms.MyCustomSignupForm',
+}
 
 SOCIALACCOUNT_PROVIDERS = {
     'yandex': {
