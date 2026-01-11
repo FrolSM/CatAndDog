@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3208a634-d1d2-416b-84dd-30de274f0caf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/news/contacts.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/news/contacts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/news/pets.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/news/pets.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/news/rules_creating_post.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/news/rules_creating_post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/news/css/news.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/news/css/news.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/flatpages/default.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/flatpages/default.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +33,7 @@
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>

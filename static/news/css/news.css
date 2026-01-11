@@ -222,21 +222,79 @@ main .account .exit button {
     padding: 1px 6px;
 }
 
-footer {
-    margin-top: auto; /* Здесь вступает в действие магия Flexbox */
-    background: #945b36; /*цвет панели сверху */
-    height: 100px; /* высота блока */
-    width: 100%; /* ширина блока */
-    min-width: 1650px;
-    border-top: 5px solid var(--border-color);
+.footer {
+  margin-top: auto;
+  background: #945b36;
+  width: 100%;
+  border-top: 5px solid var(--border-color);
+  padding: 1.5rem 0; /* Отступы сверху/снизу */
 }
 
-footer ul a {
-    display: inline-block;
-    color: 000000;
-    font-size: 24px;
-    margin-top: 25px;
-    margin-left: 100px;
+.footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center; /* Центрируем ссылки */
+  flex-wrap: wrap; /* Перенос на мобильные */
+  gap: 2rem; /* Расстояние между элементами */
+}
+
+.footer__links li {
+  display: inline-block;
+}
+
+.footer__links a {
+  color: #000000;
+  font-size: 1.5rem; /* 24px → 1.5rem для масштабируемости */
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.3s;
+}
+
+.footer__links a:hover {
+  color: #333;
+}
+
+/* Иконки (если используете Font Awesome) */
+.footer__links i {
+  font-size: 1.2rem;
+}
+
+
+/* Мобильные: вертикальная укладка, уменьшенные отступы */
+@media (max-width: 767px) {
+  .footer__links {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer__links a {
+    font-size: 1.25rem; /* ~20px */
+    justify-content: center;
+  }
+
+  .footer {
+    padding: 1rem 0;
+  }
+}
+
+/* Планшеты: 2 колонки */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .footer__links {
+    justify-content: space-around;
+  }
+}
+
+/* Десктопы: 3 колонки (исходная версия) */
+@media (min-width: 1024px) {
+  .footer__links {
+    justify-content: center;
+  }
 }
 
 main .postdeteil {
