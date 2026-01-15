@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from autoslug import AutoSlugField
-from unidecode import unidecode
 
 
 class PublishedManager(models.Manager):
@@ -39,10 +38,6 @@ class Post(models.Model):
     objects = models.Manager()
     published = PublishedManager()
 
-    # def save(self, *args, **kwargs):
-    #     if self.title and not self.slug:
-    #         self.slug = unidecode(self.title)
-    #     super().save(*args, **kwargs)
 
     def like_count(self):
         return self.like_set.count()
