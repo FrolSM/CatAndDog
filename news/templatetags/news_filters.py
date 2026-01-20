@@ -1,3 +1,4 @@
+import re
 from django import template
 
 register = template.Library()
@@ -8,7 +9,9 @@ censor_list = ['анус', 'аборт', 'бздун', 'беспезды', 'бз
 @register.filter()
 def censor(value):
     for word in censor_list:
-        value = value.replace(word, word[0]+'*' * len(word[1:]))
+        pattern = r'\b{}\b'.format(re.escape(word))
+        replacement = word[0] + '*' * (len(word) - 1)
+        value = re.sub(pattern, replacement, value, flags=re.IGNORECASE)
     return value
 
 
