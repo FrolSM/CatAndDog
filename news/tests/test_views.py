@@ -84,3 +84,18 @@ def test_post_update_by_staff(client):
     post.refresh_from_db()
     assert post.title == 'Staff Update'
     assert response.status_code == 302
+
+@pytest.mark.django_db
+def test_post_delete(client):
+    """Проверяем удаление поста staff пользователем"""
+    staff = User.objects.create_user(username='staff', password='12345', is_staff=True)
+    author = User.objects.create_user(username='author', password='12345')
+    category = Category.objects.create(name='Category1')
+    post = Post.objects.create(title='To Delete', slug='delete-post',
+                               author=author, category=category, text='abc', is_published=True)
+
+    client.login(username='staff', password='12345')
+    url = reverse('post_delete', kwargs={'slug': post.slug})
+    response = client.post(url)
+    assert not Post.objects.filter(slug='delete-post').exists()
+    assert response.status_code == 302
