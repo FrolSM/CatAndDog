@@ -136,3 +136,17 @@ def test_like_post_toggle(client):
     response = client.post(url)
     assert response.json()['liked'] is False
     assert post.like_count() == 0
+
+@pytest.mark.django_db
+def test_get_like_count(client):
+    """Проверяем корректность подсчета лайков"""
+    user = User.objects.create_user(username='liker', password='12345')
+    author = User.objects.create_user(username='author', password='12345')
+    category = Category.objects.create(name='Category1')
+    post = Post.objects.create(title='Like Count', slug='like-count',
+                               author=author, category=category, text='abc', is_published=True)
+    Like.objects.create(user=user, post=post)
+
+    url = reverse('get_like_count', kwargs={'slug': post.slug})
+    response = client.get(url)
+    assert response.json()['count'] == 1
