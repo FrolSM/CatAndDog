@@ -114,3 +114,25 @@ def test_post_comment(client):
     response = client.post(url, {'text': 'Nice post!'})
     assert Comment.objects.filter(post=post, user=user).exists()
     assert response.status_code == 302
+
+@pytest.mark.django_db
+def test_like_post_toggle(client):
+    """Проверяем установку и снятие лайка (toggle)"""
+    user = User.objects.create_user(username='liker', password='12345')
+    author = User.objects.create_user(username='author', password='12345')
+    category = Category.objects.create(name='Category1')
+    post = Post.objects.create(title='Like Post', slug='like-post',
+                               author=author, category=category, text='abc', is_published=True)
+
+    client.login(username='liker', password='12345')
+    url = reverse('like_post', kwargs={'slug': post.slug})
+
+    # Ставим лайк
+    response = client.post(url)
+    assert response.json()['liked'] is True
+    assert post.like_count() == 1
+
+    # Убираем лайк
+    response = client.post(url)
+    assert response.json()['liked'] is False
+    assert post.like_count() == 0
