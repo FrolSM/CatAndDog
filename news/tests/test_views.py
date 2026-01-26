@@ -51,3 +51,36 @@ def test_post_create(client):
     assert post.title == 'New Post'
     assert post.author == user
     assert response.status_code == 302
+
+@pytest.mark.django_db
+def test_post_update_by_author(client):
+    """Автор может обновлять свой пост"""
+    author = User.objects.create_user(username='author', password='12345')
+    category = Category.objects.create(name='Category1')
+    post = Post.objects.create(title='Old Title', slug='old-post',
+                               author=author, category=category, text='abc', is_published=True)
+
+    client.login(username='author', password='12345')
+    url = reverse('post_update', kwargs={'slug': post.slug})
+    response = client.post(url, {'title': 'Updated Title', 'text': 'New text',
+                                 'category': category.id, 'is_published': True})
+    post.refresh_from_db()
+    assert post.title == 'Updated Title'
+    assert response.status_code == 302
+
+@pytest.mark.django_db
+def test_post_update_by_staff(client):
+    """Staff может обновлять чужой пост"""
+    author = User.objects.create_user(username='author', password='12345')
+    staff = User.objects.create_user(username='staff', password='12345', is_staff=True)
+    category = Category.objects.create(name='Category1')
+    post = Post.objects.create(title='Old Title', slug='old-post',
+                               author=author, category=category, text='abc', is_published=True)
+
+    client.login(username='staff', password='12345')
+    url = reverse('post_update', kwargs={'slug': post.slug})
+    response = client.post(url, {'title': 'Staff Update', 'text': 'Staff text',
+                                 'category': category.id, 'is_published': True})
+    post.refresh_from_db()
+    assert post.title == 'Staff Update'
+    assert response.status_code == 302
