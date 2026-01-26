@@ -99,3 +99,18 @@ def test_post_delete(client):
     response = client.post(url)
     assert not Post.objects.filter(slug='delete-post').exists()
     assert response.status_code == 302
+
+@pytest.mark.django_db
+def test_post_comment(client):
+    """Проверяем создание комментария авторизованным пользователем"""
+    user = User.objects.create_user(username='commenter', password='12345')
+    author = User.objects.create_user(username='author', password='12345')
+    category = Category.objects.create(name='Category1')
+    post = Post.objects.create(title='Comment Post', slug='comment-post',
+                               author=author, category=category, text='abc', is_published=True)
+
+    client.login(username='commenter', password='12345')
+    url = reverse('post_comment', kwargs={'slug': post.slug})
+    response = client.post(url, {'text': 'Nice post!'})
+    assert Comment.objects.filter(post=post, user=user).exists()
+    assert response.status_code == 302
