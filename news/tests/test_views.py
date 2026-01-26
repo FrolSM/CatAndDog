@@ -29,3 +29,25 @@ def test_post_detail_view(client):
     url = reverse('post_detail', kwargs={'slug': 'nonexistent'})
     response = client.get(url)
     assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_post_create(client):
+    """Проверяем создание поста автором"""
+    user = User.objects.create_user(username='author', password='12345')
+    group = Group.objects.create(name='authors')
+    user.groups.add(group)
+    client.login(username='author', password='12345')
+
+    category = Category.objects.create(name='Category1')
+    url = reverse('post_create')
+    response = client.post(url, {
+        'title': 'New Post',
+        'text': 'Some text',
+        'category': category.id,
+        'is_published': True
+    })
+
+    post = Post.objects.get(slug='new-post')
+    assert post.title == 'New Post'
+    assert post.author == user
+    assert response.status_code == 302
