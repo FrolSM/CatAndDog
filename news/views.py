@@ -1,12 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django_filters.views import FilterView
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 from .filters import PostFilter
 from .models import *
 from .forms import PostForm, CommentForm
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -18,14 +18,13 @@ from django.views.decorators.http import require_POST, require_GET
 
 class PostsList(FilterView):
     model = Post
-    # ordering = '-time'
     context_object_name = 'posts'
     template_name = 'news/post_list.html'
     paginate_by = 5
     filterset_class = PostFilter
     cache_timeout = 120
 
-# кеширование набора записей (QuerySet) с учётом параметров запроса
+    # кеширование набора записей (QuerySet) с учётом параметров запроса
     def get_queryset(self):
         params = self.request.GET.dict()
         cache_key = f'post-queryset-{urlencode(params)}' if params else 'post-queryset'
@@ -57,7 +56,7 @@ class PostDetail(DetailView):
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
-# кеширование одного поста
+    # кеширование одного поста
     def get_object(self, *args, **kwargs):
         obj = cache.get(f'post-{self.kwargs["slug"]}', None)
         if not obj:
@@ -77,7 +76,7 @@ class PostCreate(UserPassesTestMixin, CreateView):
         return context
 
     def test_func(self):
-        return self.request.user.groups.filter(name='authors').exists() # проверка на авторство
+        return self.request.user.groups.filter(name='authors').exists()  # проверка на авторство
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -145,6 +144,7 @@ def like_post(request, slug):
         'count': post.like_count()
     })
 
+
 @require_GET
 def get_like_count(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -158,7 +158,7 @@ class RulesCreatingPostView(TemplateView):
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsAdminUser,)
     filterset_fields = ('author', 'category', 'is_published')
 
     def perform_create(self, serializer):
