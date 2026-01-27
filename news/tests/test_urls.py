@@ -130,3 +130,52 @@ def test_protected_pages_redirect_for_anonymous(client, url_name):
     # (LoginRequiredMixin / UserPassesTestMixin)
     response = client.get(reverse(url_name))
     assert response.status_code == 302
+
+
+# ============================================================
+# Дополнительные полезные тесты
+# ============================================================
+
+@pytest.mark.django_db
+def test_nonexistent_url_returns_404(client):
+    # Проверяем, что несуществующий URL возвращает 404
+    response = client.get('/this-url-does-not-exist/')
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_like_post_method_not_allowed(client, post):
+    # Проверяем, что GET на like_post возвращает 405 (только POST разрешен)
+    url = reverse('like_post', kwargs={'slug': post.slug})
+    response = client.get(url)
+    assert response.status_code == 405
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('url_name', [
+    'post_update',
+    'post_delete',
+    'post_comment',
+])
+def test_all_protected_pages_redirect_for_anonymous(client, post, url_name):
+    # Проверяем все защищенные страницы: редиректят анонимов на login
+    url = reverse(url_name, kwargs={'slug': post.slug})
+    response = client.get(url)
+    assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_reverse_post_detail(post):
+    # Проверка, что reverse с slug формирует правильный URL
+    url = reverse('post_detail', kwargs={'slug': post.slug})
+    assert url == f'/post/{post.slug}/'
+
+
+@pytest.mark.django_db
+def test_get_like_count_returns_json(client, post):
+    # Проверяем, что AJAX endpoint get_like_count возвращает JSON с ключом 'count'
+    url = reverse('get_like_count', kwargs={'slug': post.slug})
+    response = client.get(url)
+    assert response.status_code == 200
+    json_data = response.json()
+    assert 'count' in json_data
