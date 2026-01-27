@@ -22,6 +22,7 @@ from news.views import (
 # Эти тесты НЕ выполняют view, а только проверяют роутинг
 # ============================================================
 
+
 @pytest.mark.django_db
 def test_post_list_resolves():
     # Главная страница должна вести на PostsList
@@ -90,3 +91,42 @@ def test_get_like_count_resolves(post):
     # AJAX endpoint для получения количества лайков
     resolver = resolve(f'/post/{post.slug}/count/')
     assert resolver.func == get_like_count
+
+# ============================================================
+# reverse() + HTTP status tests
+# Проверяем:
+# 1) что URL можно построить по name
+# 2) что страница реально открывается
+# ============================================================
+
+@pytest.mark.parametrize('url_name', [
+    'post_list',
+    'contacts',
+    'pets_list',
+    'rules_creating_post',
+])
+@pytest.mark.django_db
+def test_public_pages_open(client, url_name):
+    # Публичные страницы должны быть доступны анониму (HTTP 200)
+    response = client.get(reverse(url_name))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_post_detail_open(client, post):
+    # Детальная страница опубликованного поста должна открываться
+    response = client.get(
+        reverse('post_detail', kwargs={'slug': post.slug})
+    )
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize('url_name', [
+    'post_create',
+])
+@pytest.mark.django_db
+def test_protected_pages_redirect_for_anonymous(client, url_name):
+    # Защищённые страницы должны редиректить анонимного пользователя
+    # (LoginRequiredMixin / UserPassesTestMixin)
+    response = client.get(reverse(url_name))
+    assert response.status_code == 302
