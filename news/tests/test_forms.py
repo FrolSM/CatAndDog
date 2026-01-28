@@ -10,6 +10,7 @@ def test_post_form_valid(category):
     })
     assert form.is_valid()
 
+@pytest.mark.django_db
 def test_comment_form_valid():
     form = CommentForm(data={'text': 'Nice!'})
     assert form.is_valid()
