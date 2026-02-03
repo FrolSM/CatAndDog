@@ -17,17 +17,30 @@
                 <div class="list_title">
                     <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
                 </div>
-                {% if post.photo %}
-                    <img class="img_list" src="{{ post.photo.url }}">
-                {% endif %}
-                {% if post.video %}
-                    <video class="video" controls width="650px" src="{{ post.video.url }}"></video>
-                {% endif %}
+                    <div class="media-list">
+                        {% for m in post.media.all %}
+                            {% if m.media_type == 'photo' %}
+                                <img class="img_list_small" src="{{ m.file.url }}" alt="{{ post.title }}" width="200px">
+                            {% elif m.media_type == 'video' %}
+                                <video class="video_small" controls width="200px" height="120px">
+                                    <source src="{{ m.file.url }}" type="video/mp4">
+                                    Ваш браузер не поддерживает видео.
+                                </video>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <p>{{ post.text|truncatechars:30|censor }}</p>
+
+                    {% if not forloop.last %}
+                        <img class="hrline" height="120px" src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
+                    {% endif %}
+                {% endfor %}
+
                 <p>{{ post.text|truncatechars:30|censor }}</p>
                 {% if not forloop.last %}
                 <img class="hrline" height="120px" src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
                 {% endif %}
-            {% endfor %}
         {% else %}
         <h2> Новостей нет! =( </h2>
         {% endif %}

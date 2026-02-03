@@ -396,7 +396,6 @@ main .features .form-create p{
 .form-create input:not([type='submit']),
 .form-create select {
     color: #48280f; /*  */
-    width: 100%; /* ширина */
     background: #e2d6c1; /* фон */
     box-sizing:border-box; /*  */
     border: 4px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */

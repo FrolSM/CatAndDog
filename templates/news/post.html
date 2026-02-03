@@ -2,73 +2,98 @@
 {% load news_filters %}
 
 {% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
-    <div class="postdeteil">
-        <h1>{{ post.title }}</h1>
-        <p>Категория: {{ post.category }} Пользователь: {{ post.author }}<br> Дата: {{ post.time }}</p>
-        {% if post.photo %}
-            <img class="img-article-left" src="{{ post.photo.url }}">
-        {% endif %}
-        {% if post.video %}
-            <video class="video" controls src="{{ post.video.url }}"></video>
-        {% endif %}
-        <h5>{{ post.text|censor }}</h5>
-        <div class="like">
-            <button class="like-btn" data-post-slug="{{ post.slug }}">
-                {% if request.user in post.liked_users %}
-                    Убрать лайк
-                {% else %}
-                    Лайк 👍
-                {% endif %}
-            </button>
+<div class="postdeteil">
+    <h1>{{ post.title }}</h1>
+    <p>
+        Категория: {{ post.category }} | Пользователь: {{ post.author }}<br>
+        Дата: {{ post.time }}
+    </p>
 
-            <span class="like-count" data-post-slug="{{ post.slug }}">
-                {{ post.like_count }}
-            </span>
+    <h1>{{ post.title }}</h1>
+    <p>Категория: {{ post.category }} | Автор: {{ post.author }} | Дата: {{ post.time }}</p>
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-            $(document).ready(function() {
-                $('.like-btn').click(function() {
-                    var slug = $(this).data('post-slug');
+    {% if post.media.exists %}
+        {% for m in post.media.all %}
+            {% if m.media_type == 'photo' %}
+                <img class="img-article-left" src="{{ m.file.url }}" alt="{{ post.title }}">
+            {% elif m.media_type == 'video' %}
+                <video class="video" controls>
+                    <source src="{{ m.file.url }}" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>Медиа отсутствует</p>
+    {% endif %}
 
-                    $.ajax({
-                        url: `/post/${slug}/like/`,
-                        type: 'POST',
-                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                        success: function(response) {
-                            $(`.like-btn[data-post-slug="${slug}"]`).text(
-                                response.liked ? 'Лайк 👍' : 'Лайк 👍'
-                            );
-                            $(`.like-count[data-post-slug="${slug}"]`).text(response.count);
-                        }
-                    });
+
+
+    <h5>{{ post.text|censor }}</h5>
+
+    <!-- Лайки -->
+    <div class="like">
+        <button class="like-btn" data-post-slug="{{ post.slug }}">
+            {% if request.user in post.liked_users %}
+                Убрать лайк
+            {% else %}
+                Лайк 👍
+            {% endif %}
+        </button>
+
+        <span class="like-count" data-post-slug="{{ post.slug }}">
+            {{ post.like_count }}
+        </span>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('.like-btn').click(function() {
+                var slug = $(this).data('post-slug');
+
+                $.ajax({
+                    url: `/post/${slug}/like/`,
+                    type: 'POST',
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    success: function(response) {
+                        $(`.like-btn[data-post-slug="${slug}"]`).text(
+                            response.liked ? 'Убрать лайк' : 'Лайк 👍'
+                        );
+                        $(`.like-count[data-post-slug="${slug}"]`).text(response.count);
+                    }
                 });
             });
-            </script>
-            <a href="{% url 'post_comment' post.slug %}"> Комментировать <i class="fa-regular fa-comment"></i></a>
-            {% if post.author == request.user or request.user.is_staff %}
+        });
+        </script>
+
+        <a href="{% url 'post_comment' post.slug %}"> Комментировать <i class="fa-regular fa-comment"></i></a>
+        {% if post.author == request.user or request.user.is_staff %}
             <a href="{% url 'post_update' post.slug %}"> Редактировать <i class="fa-regular fa-pen-to-square"></i></a>
-            {% endif %}
-            {% if request.user.is_staff %}
+        {% endif %}
+        {% if request.user.is_staff %}
             <a href="{% url 'post_delete' post.slug %}"> Удалить пост <i class="fa-solid fa-delete-left"></i></a>
-            {% endif %}
-        </div>
-        <br>
-        <div class="comment">
-            {% if post.comment_set.exists %}
-                <h3>Комментарии:</h3>
-                <hr>
-                {% for comment in post.comment_set.all %}
-                <p> Автор комментария: "{{ comment.user }}" Время: {{ comment.time_comm }}</p>
-                <h5> {{ comment.text|censor }}</h5>
+        {% endif %}
+    </div>
+
+    <br>
+
+    <!-- Комментарии -->
+    <div class="comment">
+        {% if post.comment_set.exists %}
+            <h3>Комментарии:</h3>
+            <hr>
+            {% for comment in post.comment_set.all %}
+                <p>Автор комментария: "{{ comment.user }}" | Время: {{ comment.time_comm }}</p>
+                <h5>{{ comment.text|censor }}</h5>
                 {% if not forloop.last %}
                     <hr>
                 {% endif %}
-                {% endfor %}
-            {% else %}
-                <p class="no-comments"> Комментариев пока нет. Будьте первым!</p>
-            {% endif %}
-        </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-comments">Комментариев пока нет. Будьте первым!</p>
+        {% endif %}
     </div>
+</div>
 {% endblock content %}

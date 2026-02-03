@@ -1,8 +1,7 @@
 from django.db.models.signals import post_save, post_delete
 from django.core.cache import cache
 from django.dispatch import receiver
-
-from .models import Post
+from .models import Post, PostMedia
 
 
 # очищение кеша при сохранении или удалении объекта модели (отдельного поста или queryset)
@@ -10,3 +9,7 @@ from .models import Post
 def cache_post(sender, instance, *args, **kwargs):
     cache.delete_pattern('post-*')
     cache.delete_pattern('post-queryset*')
+
+@receiver([post_save, post_delete], sender=PostMedia)
+def cache_post_media(sender, instance, *args, **kwargs):
+    cache.delete_pattern(f'post-media-{instance.post.id}*')

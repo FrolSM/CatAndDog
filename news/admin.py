@@ -8,7 +8,7 @@ from .models import Post, Category, Pets, Comment
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    fields = ['author', 'title', 'text', 'category', 'photo', 'video','post_photo_video']  # поля формы создания и редакции
+    fields = ['author', 'title', 'text', 'category','post_photo_video']  # поля формы создания и редакции
     list_display = ('id', 'title', 'post_photo_video', 'is_published', 'category')  # поля отображаемые в списке объектов
     list_display_links = ('id', 'title')  # поля линк
     ordering = ['-time', 'title']  # сортировка
@@ -35,19 +35,20 @@ class PostAdmin(admin.ModelAdmin):
         )
         return form
 
-    @admin.display(description='Фото или видео')
+    @admin.display(description='Медиа')
     def post_photo_video(self, post: Post):
-        if post.photo:
-            return mark_safe(f'<img src="{post.photo.url}" width=100>')
-        elif post.video:
-            video_url = post.video.url
-            return mark_safe(
-                f'<video width="200" height="150" controls>'
-                f'<source src="{video_url}" type="video/mp4">'
-                'Ваш браузер не поддерживает видео.'
-                '</video>'
-            )
-        return 'Медиа отсутствует'
+        media_html = ''
+        for media in post.media.all():
+            if media.media_type == 'photo':
+                media_html += f'<img src="{media.file.url}" width=100 style="margin:2px;">'
+            else:
+                media_html += (
+                    f'<video width="150" height="100" controls style="margin:2px;">'
+                    f'<source src="{media.file.url}" type="video/mp4">'
+                    'Ваш браузер не поддерживает видео.'
+                    '</video>'
+                )
+        return mark_safe(media_html or 'Медиа отсутствует')
 
     @admin.action(description='Опубликовать выбранные записи')
     def set_published(self, request, queryset):

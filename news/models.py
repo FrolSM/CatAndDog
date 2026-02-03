@@ -27,7 +27,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     time = models.DateTimeField(verbose_name='Время создания', auto_now_add=True)
     title = models.CharField(verbose_name='Заголовок', max_length=100, unique=True)
-    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE,default=1)
     text = models.TextField(verbose_name='Содержание')
     is_published = models.BooleanField(verbose_name='Статус',
                                        choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
@@ -49,6 +49,14 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
+
+    @property
+    def has_photo(self):
+        return self.media.filter(media_type='photo').exists()
+
+    @property
+    def has_video(self):
+        return self.media.filter(media_type='video').exists()
 
 
 class Comment(models.Model):

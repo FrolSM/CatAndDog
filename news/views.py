@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 from .filters import PostFilter
 from .models import *
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, PostMediaFormSet
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.http import JsonResponse
@@ -72,15 +72,36 @@ class PostCreate(UserPassesTestMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['create_or_edit'] = 'Добавление' if isinstance(self, CreateView) else 'Редактирование'
+        context['create_or_edit'] = 'Добавление'
+
+        if self.request.POST:
+            context['media_formset'] = PostMediaFormSet(
+                self.request.POST, self.request.FILES, queryset=PostMedia.objects.none()
+            )
+        else:
+            context['media_formset'] = PostMediaFormSet(queryset=PostMedia.objects.none())
+
         return context
 
     def test_func(self):
-        return self.request.user.groups.filter(name='authors').exists()  # проверка на авторство
+        return self.request.user.groups.filter(name='authors').exists()
 
     def form_valid(self, form):
+        context = self.get_context_data()
+        media_formset = context['media_formset']
+
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        if media_formset.is_valid():
+            for media_form in media_formset:
+                if media_form.cleaned_data and not media_form.cleaned_data.get('DELETE', False):
+                    PostMedia.objects.create(
+                        post=self.object,
+                        media_type=media_form.cleaned_data['media_type'],
+                        file=media_form.cleaned_data['file']
+                    )
+        return response
 
 
 class PostUpdate(UserPassesTestMixin, UpdateView):
@@ -90,11 +111,41 @@ class PostUpdate(UserPassesTestMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['create_or_edit'] = 'Добавление' if isinstance(self, CreateView) else 'Редактирование'
+        context['create_or_edit'] = 'Редактирование'
+
+        if self.request.POST:
+            context['media_formset'] = PostMediaFormSet(
+                self.request.POST, self.request.FILES, queryset=self.object.media.all()
+            )
+        else:
+            context['media_formset'] = PostMediaFormSet(queryset=self.object.media.all())
+
         return context
 
     def test_func(self):
         return self.get_object().author == self.request.user or self.request.user.is_staff
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        media_formset = context['media_formset']
+
+        response = super().form_valid(form)
+
+        if media_formset.is_valid():
+            # Сохраняем новые файлы и удаляем отмеченные
+            for media_form in media_formset:
+                if media_form.cleaned_data:
+                    if media_form.cleaned_data.get('DELETE', False):
+                        if media_form.instance.pk:
+                            media_form.instance.delete()
+                    elif not media_form.instance.pk:
+                        PostMedia.objects.create(
+                            post=self.object,
+                            media_type=media_form.cleaned_data['media_type'],
+                            file=media_form.cleaned_data['file']
+                        )
+
+        return response
 
 
 class PostDelete(UserPassesTestMixin, DeleteView):
@@ -162,4 +213,15 @@ class PostViewSet(ModelViewSet):
     filterset_fields = ('author', 'category', 'is_published')
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        post = serializer.save(author=self.request.user)
+        for f in self.request.FILES.getlist('photos'):
+            PostMedia.objects.create(post=post, media_type='photo', file=f)
+        for f in self.request.FILES.getlist('videos'):
+            PostMedia.objects.create(post=post, media_type='video', file=f)
+
+    def perform_update(self, serializer):
+        post = serializer.save()
+        for f in self.request.FILES.getlist('photos'):
+            PostMedia.objects.create(post=post, media_type='photo', file=f)
+        for f in self.request.FILES.getlist('videos'):
+            PostMedia.objects.create(post=post, media_type='video', file=f)
