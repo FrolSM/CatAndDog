@@ -29,10 +29,6 @@ class Post(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=100, unique=True)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
     text = models.TextField(verbose_name='Содержание')
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', default=None, blank=True, null=True,
-                              verbose_name='Добавить фото')
-    video = models.FileField(upload_to='video/%Y/%m/%d/', default=None, blank=True, null=True,
-                             verbose_name='Добавить видео')
     is_published = models.BooleanField(verbose_name='Статус',
                                        choices=tuple(map(lambda x: (bool(x[0]), x[1]), Status.choices)),
                                        default=Status.PUBLISHED)
@@ -90,3 +86,23 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user.username} likes {self.post.title}"
+
+
+class PostMedia(models.Model):
+    class MediaType(models.TextChoices):
+        PHOTO = 'photo', 'Фото'
+        VIDEO = 'video', 'Видео'
+
+    post = models.ForeignKey(Post, related_name='media', on_delete=models.CASCADE)  # related_name позволяет обращаться post.media.all()
+    media_type = models.CharField(max_length=5, choices=MediaType.choices)
+    file = models.FileField(upload_to='posts/%Y/%m/%d/')
+    order = models.PositiveIntegerField(default=0)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('order',)
+
+    def __str__(self):
+        return f"{self.post.title} {self.media_type}"
+
+
