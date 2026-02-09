@@ -2,13 +2,18 @@ from django import forms
 from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
 
-from .models import Post, Category, Pets, Comment
+from .models import Post, Category, Pets, Comment, PostMedia
+
+
+class PostMediaInline(admin.TabularInline):
+    model = PostMedia
+    extra = 1
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
-    fields = ['author', 'title', 'text', 'category','post_photo_video']  # поля формы создания и редакции
+    fields = ['title', 'text', 'category','post_photo_video']  # поля формы создания и редакции
     list_display = ('id', 'title', 'post_photo_video', 'is_published', 'category')  # поля отображаемые в списке объектов
     list_display_links = ('id', 'title')  # поля линк
     ordering = ['-time', 'title']  # сортировка
@@ -17,6 +22,7 @@ class PostAdmin(admin.ModelAdmin):
     actions = ['set_published', 'set_draft']  # доп действия
     list_filter = ['category', 'is_published']  # фильтрация по полям
     readonly_fields = ('post_photo_video', 'author')  # поля неизменяемое (видное в форме)
+    inlines = [PostMediaInline]
 
     def save_model(self, request, obj, form, change):
         if not change:  # Только при создании новой записи
