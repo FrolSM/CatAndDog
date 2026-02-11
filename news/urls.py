@@ -13,4 +13,5 @@ urlpatterns = [
     path('rules_creating_post/', RulesCreatingPostView.as_view(), name='rules_creating_post'),
     path('post/<slug:slug>/update/', PostUpdate.as_view(), name='post_update'),
     path('post/<slug:slug>/delete/', PostDelete.as_view(), name='post_delete'),
+    path('post/<slug:slug>/comment/<int:pk>/update/', UpdateComment.as_view(), name='post_comment_update'),
 ]

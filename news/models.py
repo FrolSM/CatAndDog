@@ -61,7 +61,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    author_comm = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     text = models.TextField('Текст')
     time_comm = models.DateTimeField(auto_now_add=True)
 

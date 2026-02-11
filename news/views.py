@@ -174,13 +174,32 @@ class PostComment(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = self.request.user
+        self.object.author_comm = self.request.user
         self.object.post = get_object_or_404(Post, slug=self.kwargs['slug'])
         self.object.save()
         return redirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'slug': self.object.post.slug})
+
+
+class UpdateComment(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'news/comment_update.html'
+
+    def test_func(self):
+        return self.get_object().author_comm == self.request.user or self.request.user.is_staff
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            Comment,
+            pk=self.kwargs['pk'],
+            post__slug=self.kwargs['slug']
+        )
+
+    def get_success_url(self):
+        return self.get_object().post.get_absolute_url()
 
 
 @require_POST

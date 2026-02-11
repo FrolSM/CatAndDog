@@ -6,12 +6,6 @@
 {% block content %}
 <div class="postdeteil">
     <h1>{{ post.title }}</h1>
-    <p>
-        Категория: {{ post.category }} | Пользователь: {{ post.author }}<br>
-        Дата: {{ post.time }}
-    </p>
-
-    <h1>{{ post.title }}</h1>
     <p>Категория: {{ post.category }} | Автор: {{ post.author }} | Дата: {{ post.time }}</p>
 
     {% if post.media.exists %}
@@ -87,6 +81,9 @@
             {% for comment in post.comment_set.all %}
                 <p>Автор комментария: "{{ comment.user }}" | Время: {{ comment.time_comm }}</p>
                 <h5>{{ comment.text|censor }}</h5>
+                {% if post.author == request.user or request.user.is_staff %}
+                <p><a href="{% url 'post_comment_update' post.slug comment.pk %}">Редактировать</a></p>
+                {% endif %}
                 {% if not forloop.last %}
                     <hr>
                 {% endif %}

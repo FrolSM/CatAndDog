@@ -90,5 +90,5 @@ class PetsAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'post', 'user', 'time_comm')
+    list_display = ('id', 'post', 'author_comm', 'time_comm')
     list_filter = ('post',)
