@@ -81,9 +81,7 @@
             {% for comment in post.comment_set.all %}
                 <p>Автор комментария: "{{ comment.user }}" | Время: {{ comment.time_comm }}</p>
                 <h5>{{ comment.text|censor }}</h5>
-                {% if post.author == request.user or request.user.is_staff %}
-                <p><a href="{% url 'post_comment_update' post.slug comment.pk %}">Редактировать</a></p>
-                {% endif %}
+                <a href="{% url 'post_comment_update' post.slug comment.pk %}" class="update_comm">Редактировать</a>
                 {% if not forloop.last %}
                     <hr>
                 {% endif %}

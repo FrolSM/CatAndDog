@@ -489,3 +489,21 @@ main .about p {
     border: none; /* полностью убирает рамку */
     border-top: 1px solid #ccc; /* стиль линии */
 }
+
+.update_comm {
+    display: block;
+    margin: auto;
+}
+
+
+.update_comm {
+    display: inline-block;
+    background: #eca646;
+    color: #48280f;
+    font-size: 20px;
+    margin: 10px;
+    width: 200px;
+    height: 36px;
+    border: 3px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
+    border-radius: 32px; /* закругление границ элемента */
+}
