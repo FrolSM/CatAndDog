@@ -8,7 +8,7 @@ class PostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.fields['category'].empty_label = 'Выберите категорию'
+        self.fields['category'].empty_label = 'Выберите категорию'
 
     class Meta:
         model = Post

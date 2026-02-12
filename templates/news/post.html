@@ -79,9 +79,14 @@
             <h3>Комментарии:</h3>
             <hr>
             {% for comment in post.comment_set.all %}
-                <p>Автор комментария: "{{ comment.user }}" | Время: {{ comment.time_comm }}</p>
+                <p>Автор комментария: "{{ comment.author_comm }}" | Время: {{ comment.time_comm }}</p>
                 <h5>{{ comment.text|censor }}</h5>
-                <a href="{% url 'post_comment_update' post.slug comment.pk %}" class="update_comm">Редактировать</a>
+                {% if comment.author_comm == request.user or request.user.is_staff %}
+                <div class="update_or_delete_comm">
+                    <a href="{% url 'post_comment_update' post.slug comment.pk %}" >Редактировать</a>
+                    <a href="{% url 'comment_delete' post.slug comment.pk %}" >Удалить</a>
+                </div>
+                {% endif %}
                 {% if not forloop.last %}
                     <hr>
                 {% endif %}

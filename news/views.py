@@ -202,6 +202,18 @@ class UpdateComment(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.get_object().post.get_absolute_url()
 
 
+class DeleteComment(UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = 'news/comment_delete.html'
+
+    def test_func(self):
+        return self.get_object().author_comm == self.request.user or self.request.user.is_staff
+
+    def get_success_url(self):
+        return reverse('post_detail', kwargs={'slug': self.object.post.slug})
+
+
+
 @require_POST
 @login_required
 def like_post(request, slug):

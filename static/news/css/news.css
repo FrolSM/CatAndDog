@@ -490,20 +490,17 @@ main .about p {
     border-top: 1px solid #ccc; /* стиль линии */
 }
 
-.update_comm {
+.update_or_delete_comm {
     display: block;
     margin: auto;
 }
 
 
-.update_comm {
+.update_or_delete_comm a {
     display: inline-block;
-    background: #eca646;
     color: #48280f;
-    font-size: 20px;
-    margin: 10px;
-    width: 200px;
-    height: 36px;
-    border: 3px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
-    border-radius: 32px; /* закругление границ элемента */
+    font-size: 15px;
+    margin: 5px;
+    width: 150px;
+    height: 20px;
 }
