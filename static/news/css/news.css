@@ -452,18 +452,18 @@ main .about p {
 }
 
 .page-pagination {
-    color: #48280f; /* цвет текста */
+    color: var(--border-color); /* цвет текста */
     border: 3px solid var(--border-color); /* граница элемента,толщиной 3рх ,сплошная линия  */
     border-radius: 30px; /* закругление границ элемента */
     font-size: 20px; /* размер текста */
-    padding: 2.5;  /* отступы */
+    padding: 0px 5px;  /* отступы */
 }
 .page-active {
-    color: #e2d6c1; /* цвет текста */
-    border: 3px dotted #e2d6c1; /* граница элемента,толщиной 3рх ,сплошная линия  */
+    color: var(--border-color); /* цвет текста */
+    border: 3px solid var(--border-color); /* граница элемента,толщиной 3рх ,сплошная линия  */
     border-radius: 30px; /* закругление границ элемента */
     font-size: 20px; /* размер текста */
-    padding: 2.5;  /* отступы */
+    padding: 0px 5px;  /* отступы */
 }
 
 .like-btn {
