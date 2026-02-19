@@ -29,36 +29,53 @@
 
     <!-- Лайки -->
     <div class="like">
-        <button class="like-btn" data-post-slug="{{ post.slug }}">
-            {% if is_liked %}
-                Убрать лайк
-            {% else %}
-                Лайк 👍
-            {% endif %}
+        <button class="like-btn" data-post-slug="{{ post.slug }}" data-url="{% url 'like_post' post.slug %}">
+            {% if is_liked %}Убрать лайк{% else %}Лайк{% endif %}
         </button>
-
         <span class="like-count" data-post-slug="{{ post.slug }}">
             {{ post.like_count }}
         </span>
 
-        <script>
-        $(document).ready(function() {
-            $('.like-btn').click(function() {
-                var slug = $(this).data('post-slug');
 
-                $.ajax({
-                    url: `/post/${slug}/like/`,
-                    type: 'POST',
-                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                    success: function(response) {
-                        $(`.like-btn[data-post-slug="${slug}"]`).text(
-                            response.liked ? 'Убрать лайк' : 'Лайк 👍'
-                        );
-                        $(`.like-count[data-post-slug="${slug}"]`).text(response.count);
-                    }
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.like-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    console.log('Клик по лайку');
+                    var url = button.dataset.url;
+                    var slug = button.dataset.postSlug;
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        button.textContent = data.liked ? 'Убрать лайк' : 'Лайк';
+                        document.querySelector(`.like-count[data-post-slug="${slug}"]`).textContent = data.count;
+                    })
+                    .catch(console.error);
                 });
             });
         });
+
+        // Функция для получения csrf из cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                let cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
         </script>
 
         <a href="{% url 'post_comment' post.slug %}"> Комментировать <i class="fa-regular fa-comment"></i></a>

@@ -65,9 +65,7 @@ class PostDetail(DetailView):
         return obj
 
     def get_queryset(self):
-        return Post.objects.select_related(
-            "author", "category"
-        ).prefetch_related("media", "comment_set")
+        return Post.objects.select_related("author", "category").prefetch_related("media", "comment_set")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
