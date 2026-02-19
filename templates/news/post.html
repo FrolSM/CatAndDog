@@ -4,11 +4,11 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<div class="postdeteil">
+<div class="postdetail">
     <h1>{{ post.title }}</h1>
     <p>Категория: {{ post.category }} | Автор: {{ post.author }} | Дата: {{ post.time }}</p>
 
-    {% if post.media.exists %}
+    {% if post.media.all %}
         {% for m in post.media.all %}
             {% if m.media_type == 'photo' %}
                 <img class="img-article-left" src="{{ m.file.url }}" alt="{{ post.title }}">
@@ -30,7 +30,7 @@
     <!-- Лайки -->
     <div class="like">
         <button class="like-btn" data-post-slug="{{ post.slug }}">
-            {% if request.user in post.liked_users %}
+            {% if is_liked %}
                 Убрать лайк
             {% else %}
                 Лайк 👍
@@ -41,7 +41,6 @@
             {{ post.like_count }}
         </span>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
         $(document).ready(function() {
             $('.like-btn').click(function() {
@@ -67,7 +66,15 @@
             <a href="{% url 'post_update' post.slug %}"> Редактировать <i class="fa-regular fa-pen-to-square"></i></a>
         {% endif %}
         {% if request.user.is_staff %}
-            <a href="{% url 'post_delete' post.slug %}"> Удалить пост <i class="fa-solid fa-delete-left"></i></a>
+            <form action="{% url 'post_delete' post.slug %}"
+                  method="post"
+                  style="display:inline;"
+                  onsubmit="return confirm('Вы уверены, что хотите удалить пост?');">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">
+                    Удалить пост <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </form>
         {% endif %}
     </div>
 

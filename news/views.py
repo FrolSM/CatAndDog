@@ -64,6 +64,21 @@ class PostDetail(DetailView):
             cache.set(f'post-{self.kwargs["slug"]}', obj, self.cache_timeout)
         return obj
 
+    def get_queryset(self):
+        return Post.objects.select_related(
+            "author", "category"
+        ).prefetch_related("media", "comment_set")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        context["is_liked"] = (
+                user.is_authenticated and
+                Like.objects.filter(user=user, post=self.object).exists()
+        )
+        return context
+
 
 class PostCreate(UserPassesTestMixin, CreateView):
     form_class = PostForm
