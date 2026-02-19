@@ -10,15 +10,15 @@
         {{ form.as_p }}
 
         {{ media_formset.management_form }}
-        {% for form in media_formset %}
+        {% for media_form in media_formset %}
             <div class="media-form">
-                {{ form.media_type }}
-                {{ form.file }}
+                {{ media_form.media_type }}
+                {{ media_form.file }}
             </div>
         {% endfor %}
 
         <h4>Перед {{ create_or_edit }} поста ознакомьтесь с
-            <a href="{% url 'rules_creating_post' %}" target="_blank">ПРАВИЛАМИ</a>
+            <a href="{% url 'rules_creating_post' %}" target="_blank" rel="noopener noreferrer">ПРАВИЛАМИ</a>
         </h4>
 
         <input type="submit" value="Сохранить" />
