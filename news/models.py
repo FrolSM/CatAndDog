@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from autoslug import AutoSlugField
+from .utils.image_converter import convert_to_webp
+from .utils.validators import validate_media_type, validate_file_size
+from .utils.video_converter import convert_video
 
 
 class PublishedManager(models.Manager):
@@ -103,7 +106,7 @@ class PostMedia(models.Model):
 
     post = models.ForeignKey(Post, related_name='media', on_delete=models.CASCADE)  # related_name позволяет обращаться post.media.all()
     media_type = models.CharField(max_length=5, choices=MediaType.choices)
-    file = models.FileField(upload_to='posts/%Y/%m/%d/')
+    file = models.FileField(upload_to='posts/%Y/%m/%d/', validators=[validate_media_type, validate_file_size])
     order = models.PositiveIntegerField(default=0)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -112,3 +115,22 @@ class PostMedia(models.Model):
 
     def __str__(self):
         return f"{self.post.title} {self.media_type}"
+
+    def save(self, *args, **kwargs):
+        """
+        Сохраняем фото и видео:
+        - фото → WebP через Pillow
+        - видео → MP4 через FFmpeg
+        """
+        if self.file:
+            # фото
+            if self.media_type == self.MediaType.PHOTO:
+                if not self.file.name.lower().endswith(".webp"):
+                    self.file = convert_to_webp(self.file)
+
+            # видео
+            elif self.media_type == self.MediaType.VIDEO:
+                if not self.file.name.lower().endswith(".mp4"):
+                    self.file = convert_video(self.file, output_format="mp4")
+
+        super().save(*args, **kwargs)
