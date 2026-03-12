@@ -137,12 +137,12 @@ main .features {
     width: 100%; /* ширина */
 }
 
-main .features .video {
+main .features .media-list .img_list {
     border: 4px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
 }
 
-main .features .img_list {
+main .features .media-list .video_list {
     border: 4px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
     border-radius: 32px; /* закругление границ элемента */
 }
@@ -306,23 +306,23 @@ main .postdetail {
     color: #fbfbf1; /* цвет */
     text-align: center; /* расположение по центру */
     width: 100%; /* ширина */
-    min-width: 1650px;
 }
 
 main .postdetail h1 {font-size: 50px;} /* размер шрифта */
 main .postdetail p {max-width: 600px; margin: 20px auto;} /* ширина 600; отступ сверху и снизу 20 по бокам авто*/
 main .postdetail h5 {max-width: 1000px; margin: 20px auto;}
 
-main .postdetail img {
-    border: 4px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
-    border-radius: 32px; /* закругление границ элемента */
+main .postdetail img,
+main .postdetail video {
+    display: inline-block;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border: 4px solid var(--border-color);
+    border-radius: 32px;
+    margin: 10px;
 }
 
-main .postdetail video {
-    width: 500px;
-    border: 4px solid #48280f; /* граница элемента,толщиной 4рх ,сплошная линия  */
-    border-radius: 32px; /* закругление границ элемента */
-}
 main .like {
     display: block;
     margin: auto;
@@ -514,4 +514,91 @@ main .about p {
     margin: 5px;
     width: 150px;
     height: 20px;
+}
+
+.image-modal{
+    display:none;
+    position:fixed;
+    z-index:2000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+}
+
+.image-modal img{
+    display:block;
+    max-width:90%;
+    max-height:95%;
+    margin:auto;
+    margin-top:1%;
+}
+
+main .postdetail img.img-article-left {
+    max-width: 300px;  /* максимальная ширина картинки на странице */
+    height: auto;       /* пропорциональная высота */
+    cursor: pointer;    /* показывает, что можно кликнуть */
+    border-radius: 32px; /* опционально — закругление углов */
+    transition: transform 0.2s; /* плавный эффект при наведении */
+}
+
+.media-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;  /* расстояние между элементами */
+    flex-wrap: wrap;  /* если не помещаются, переходят на новую строку */
+}
+
+.post-item {
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #48280f;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.post-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.media-list {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; /* для адаптивности */
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.media-thumb {
+    max-width: 200px;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.media-thumb video {
+    display: block;
+}
+
+.post-snippet {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #333;
+}
+
+.post-divider {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 30px auto;
+    max-width: 600px;
+}
+
+.hrline {
+    width: 80%;
 }

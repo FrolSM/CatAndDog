@@ -13,28 +13,30 @@
     <h1> Список новостей </h1>
         {% if posts %}
             {% for post in posts %}
-<!--                <p>Категория: {{ post.category }}<br>Пользователь: {{ post.author }} Дата: {{ post.time }}</p>-->
-                <div class="list_title">
-                    <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
-                </div>
+                <div class="post-item">
+                    <h3 class="post-title">
+                        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+                    </h3>
+
                     <div class="media-list">
                         {% for m in post.media.all %}
                             {% if m.media_type == 'photo' %}
-                                <img class="img_list_small" src="{{ m.file.url }}" alt="{{ post.title }}" width="200">
+                                <img class="media-thumb" src="{{ m.file.url }}" alt="{{ post.title }}">
                             {% elif m.media_type == 'video' %}
-                                <video class="video_small" controls width="200" height="120">
-                                    <source src="{{ m.file.url }}" type="video/mp4">
-                                    Ваш браузер не поддерживает видео.
+                                <video class="media-thumb" controls>
+                                <source src="{{ m.file.url }}" type="video/mp4">
+                                Ваш браузер не поддерживает видео.
                                 </video>
                             {% endif %}
                         {% endfor %}
                     </div>
 
-                    <p>{{ post.text|truncatechars:30|censor }}</p>
+                    <p class="post-snippet">{{ post.text|truncatechars:100|censor }}</p>
 
                     {% if not forloop.last %}
-                        <img class="hrline" height="120px" src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
+                        <img class="hrline" src="{% static 'news/img/hr_dog.svg' %}" alt="hr_line">
                     {% endif %}
+                </div>
             {% endfor %}
         {% else %}
         <h2> Новостей нет! =( </h2>

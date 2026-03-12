@@ -9,9 +9,10 @@
     <p>Категория: {{ post.category }} | Автор: {{ post.author }} | Дата: {{ post.time }}</p>
 
     {% if post.media.all %}
+    <div class="media-container">
         {% for m in post.media.all %}
             {% if m.media_type == 'photo' %}
-                <img class="img-article-left" src="{{ m.file.url }}" alt="{{ post.title }}">
+                <img class="img-article-left post-image" src="{{ m.file.url }}" alt="{{ post.title }}">
             {% elif m.media_type == 'video' %}
                 <video class="video" controls>
                     <source src="{{ m.file.url }}" type="video/mp4">
@@ -19,6 +20,7 @@
                 </video>
             {% endif %}
         {% endfor %}
+    </div>
     {% else %}
         <p>Медиа отсутствует</p>
     {% endif %}
@@ -35,48 +37,6 @@
         <span class="like-count" data-post-slug="{{ post.slug }}">
             {{ post.like_count }}
         </span>
-
-
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.like-btn').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    console.log('Клик по лайку');
-                    var url = button.dataset.url;
-                    var slug = button.dataset.postSlug;
-
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': getCookie('csrftoken')
-                        }
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        button.textContent = data.liked ? 'Убрать лайк' : 'Лайк';
-                        document.querySelector(`.like-count[data-post-slug="${slug}"]`).textContent = data.count;
-                    })
-                    .catch(console.error);
-                });
-            });
-        });
-
-        // Функция для получения csrf из cookie
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                let cookies = document.cookie.split(';');
-                for (let cookie of cookies) {
-                    cookie = cookie.trim();
-                    if (cookie.startsWith(name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        </script>
 
         <a href="{% url 'post_comment' post.slug %}"> Комментировать <i class="fa-regular fa-comment"></i></a>
         {% if post.author == request.user or request.user.is_staff %}
@@ -119,5 +79,8 @@
             <p class="no-comments">Комментариев пока нет. Будьте первым!</p>
         {% endif %}
     </div>
+</div>
+<div id="imageModal" class="image-modal">
+    <img id="modalImg">
 </div>
 {% endblock content %}
