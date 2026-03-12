@@ -137,29 +137,8 @@ main .features {
     width: 100%; /* ширина */
 }
 
-main .features .media-list .img_list {
-    border: 4px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
-    border-radius: 32px; /* закругление границ элемента */
-}
-
-main .features .media-list .video_list {
-    border: 4px solid var(--border-color); /* граница элемента,толщиной 4рх ,сплошная линия  */
-    border-radius: 32px; /* закругление границ элемента */
-}
-
-main .features .list_title h3 {
-    font-size: 30px;
-    display: inline-block;
-    transition: transform .6s ease;
-}
-
-main .features .list_title h3:hover {
-    transform: scale(1.20);
-}
-
 main .features h1 {font-size: 50px;} /* размер шрифта */
 main .features p {max-width: 400px; margin: 10px auto;} /* ширина 400; отступ сверху и снизу 20 по бокам авто*/
-
 
 a { text-decoration: none; }
 
@@ -590,13 +569,6 @@ main .postdetail img.img-article-left {
     max-width: 600px;
     margin: 0 auto;
     color: #333;
-}
-
-.post-divider {
-    border: none;
-    border-top: 2px solid var(--border-color);
-    margin: 30px auto;
-    max-width: 600px;
 }
 
 .hrline {
