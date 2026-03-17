@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+
+  web:
+    build: .
+    command: gunicorn CatAndDog.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+    depends_on:
+      - db
+      - redis
+    expose:
+      - 8000
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: catdog
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 326159487
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+
+  celery_worker:
+    build: .
+    command: celery -A CatAndDog worker -l info
+    depends_on:
+      - redis
+      - db
+
+  celery_beat:
+    build: .
+    command: celery -A CatAndDog beat -l info
+    depends_on:
+      - redis
+      - db
+
+  flower:
+    build: .
+    command: celery -A CatAndDog flower
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/app/static
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
+  static_volume:
