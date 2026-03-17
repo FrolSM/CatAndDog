@@ -4,10 +4,14 @@ services:
 
   web:
     build: .
+    image: catanddog_app
     command: gunicorn CatAndDog.wsgi:application --bind 0.0.0.0:8000
+    env_file:
+      - .env
     volumes:
-      - .:/app
+      - .:/app   #только в dev
       - static_volume:/app/static
+      - media_volume:/app/media
     depends_on:
       - db
       - redis
@@ -16,10 +20,12 @@ services:
 
   db:
     image: postgres:15
+    env_file:
+      - .env
     environment:
-      POSTGRES_DB: catdog
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 326159487
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_LOGIN}
+      POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -29,6 +35,8 @@ services:
   celery_worker:
     build: .
     command: celery -A CatAndDog worker -l info
+    env_file:
+      - .env
     depends_on:
       - redis
       - db
@@ -36,6 +44,8 @@ services:
   celery_beat:
     build: .
     command: celery -A CatAndDog beat -l info
+    env_file:
+      - .env
     depends_on:
       - redis
       - db
@@ -43,6 +53,8 @@ services:
   flower:
     build: .
     command: celery -A CatAndDog flower
+    env_file:
+      - .env
     ports:
       - "5555:5555"
     depends_on:
@@ -51,13 +63,15 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8000:80"
+      - "8000:80"   # 👈 dev порт
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - static_volume:/app/static
+      - media_volume:/app/media
     depends_on:
       - web
 
 volumes:
   postgres_data:
   static_volume:
+  media_volume:
