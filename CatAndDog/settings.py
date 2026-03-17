@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+from django.conf.global_settings import CSRF_TRUSTED_ORIGINS
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -27,8 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1',
-    'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INTERNAL_IPS = [
     '127.0.0.1',
     'localhost',]
@@ -264,8 +264,13 @@ SPECTACULAR_SETTINGS = {
 #     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 #     SECURE_HSTS_PRELOAD = True
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/1'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
