@@ -43,7 +43,7 @@ parso==0.8.5
 pillow==11.3.0
 pluggy==1.6.0
 prompt_toolkit==3.0.52
-psycopg2==2.9.10
+psycopg2==2.9.11
 pure_eval==0.2.3
 pycodestyle==2.14.0
 pycparser==2.23
@@ -52,9 +52,10 @@ Pygments==2.19.2
 PyJWT==2.10.1
 pytest==9.0.2
 pytest-django==4.11.1
+pytest-env==1.6.0
 python-crontab==3.3.0
 python-dateutil==2.9.0.post0
-python-dotenv==1.1.1
+python-dotenv==1.2.2
 python3-openid==3.2.0
 pytz==2025.2
 PyYAML==6.0.3
@@ -63,6 +64,7 @@ referencing==0.37.0
 requests==2.32.5
 requests-oauthlib==2.0.0
 rpds-py==0.30.0
+six==1.17.0
 sqlparse==0.5.3
 stack-data==0.6.3
 traitlets==5.14.3
