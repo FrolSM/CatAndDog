@@ -9,9 +9,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 # 4. Системные зависимости
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
+RUN echo "deb https://deb.debian.org/debian trixie main" > /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y \
+        gcc \
+        libpq-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
