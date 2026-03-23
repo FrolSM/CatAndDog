@@ -53,3 +53,33 @@ run_migrations() {
   echo "📦 Applying migrations..."
   python manage.py migrate --noinput
 }
+
+collect_static() {
+  echo "🎨 Collecting static files..."
+  python manage.py collectstatic --noinput
+}
+
+create_superuser() {
+  if [ "$CREATE_SUPERUSER" = "true" ]; then
+    echo "👤 Creating superuser..."
+
+    python manage.py createsuperuser \
+      --noinput || echo "⚠️ Superuser already exists"
+  fi
+}
+
+# ----------------------------
+# Основной сценарий
+# ----------------------------
+main() {
+  check_env
+  wait_for_db
+  run_migrations
+  collect_static
+  create_superuser
+
+  echo "🔥 Starting application..."
+  exec "$@"
+}
+
+main "$@"
