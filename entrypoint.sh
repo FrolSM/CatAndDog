@@ -27,3 +27,29 @@ wait_for_db() {
 
   echo "✅ PostgreSQL is available"
 }
+
+# ----------------------------
+# Проверка переменных окружения
+# ----------------------------
+check_env() {
+  echo "🔍 Checking required environment variables..."
+
+  required_vars="DB_NAME DB_USER DB_PASSWORD"
+
+  for var in $required_vars; do
+    if [ -z "$(eval echo \$$var)" ]; then
+      echo "❌ ERROR: $var is not set"
+      exit 1
+    fi
+  done
+
+  echo "✅ Environment variables OK"
+}
+
+# ----------------------------
+# Django команды
+# ----------------------------
+run_migrations() {
+  echo "📦 Applying migrations..."
+  python manage.py migrate --noinput
+}
