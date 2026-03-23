@@ -23,8 +23,8 @@ services:
       - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_LOGIN}
-      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -33,9 +33,12 @@ services:
 
   celery_worker:
     build: .
-    command: celery -A CatAndDog worker -l info
+    command: celery -A CatAndDog worker -l info -E
     env_file:
       - .env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
     depends_on:
       - redis
       - db
@@ -45,13 +48,16 @@ services:
     command: celery -A CatAndDog beat -l info
     env_file:
       - .env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/1
     depends_on:
       - redis
       - db
 
   flower:
     build: .
-    command: celery -A CatAndDog flower --port=5555 --broker=redis://redis:6379/0
+    command: celery -A CatAndDog flower --port=5555
     env_file:
       - .env
     ports:
