@@ -9,7 +9,7 @@ services:
       - .env
     volumes:
       - .:/app   #только в dev
-      - static_volume:/app/static
+      - static_volume:/app/staticfiles
       - media_volume:/app/media
     depends_on:
       - db
@@ -71,7 +71,7 @@ services:
       - "8000:80"   # 👈 dev порт
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - static_volume:/app/static
+      - static_volume:/app/staticfiles
       - media_volume:/app/media
     depends_on:
       - web
