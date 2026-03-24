@@ -4,13 +4,29 @@ services:
 
   web:
     image: catanddog_app
-    command: gunicorn CatAndDog.wsgi:application --bind 0.0.0.0:8000
+    command: >
+      gunicorn CatAndDog.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 3
+      --timeout 120
+      --access-logfile -
+      --error-logfile -
     env_file:
       - .env
     volumes:
-      - static_volume:/app/static
+      - static_volume:/app/staticfiles
       - media_volume:/app/media
     restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health/" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   db:
     image: postgres:15
@@ -20,15 +36,31 @@ services:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
 
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${DB_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   redis:
     image: redis:7
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
   celery_worker:
     image: catanddog_app
     command: celery -A CatAndDog worker -l info
     env_file:
       - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     restart: unless-stopped
 
   celery_beat:
@@ -37,18 +69,28 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     restart: unless-stopped
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.25
     ports:
       - "80:80"
     volumes:
       - ./nginx:/etc/nginx/conf.d
-      - static_volume:/app/static
+      - static_volume:/app/staticfiles
       - media_volume:/app/media
     restart: unless-stopped
+    depends_on:
+      - web
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/health/" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 volumes:
   postgres_data:
@@ -56,6 +98,6 @@ volumes:
   media_volume:
 
 # для деплоя
-#docker compose down
-#docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build первый запуск
-#docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d последующие
+#docker compose down удаление контейнера
+#docker compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d --build первый запуск
+#docker compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d последующие
