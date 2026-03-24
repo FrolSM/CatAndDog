@@ -74,6 +74,8 @@ create_superuser() {
 main() {
   check_env
   wait_for_db
+  mkdir -p /app/staticfiles
+  chmod -R 777 /app/staticfiles
   run_migrations
   collect_static
   create_superuser
