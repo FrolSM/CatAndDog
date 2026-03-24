@@ -21,10 +21,13 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from news import views
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from django.http import HttpResponse
 
 router = DefaultRouter()
 router.register(r'post', views.PostViewSet , basename='post')
 
+def health(request):
+    return HttpResponse("OK", status=200)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +39,7 @@ urlpatterns = [
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path("health/", health),
 ]
 
 if settings.DEBUG:
