@@ -130,22 +130,41 @@ pytest
 text
 Копировать код
 CatAndDog/
-├── news/
+├── CatAndDog/                # core django
+│   ├── settings/
+│   │   ├── base.py
+│   │   ├── local.py
+│   │   ├── docker.py
+│   │   └── production.py
+│   ├── celery.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+├── news/                     # приложение (основное)
 │   ├── models.py
 │   ├── views.py
-│   ├── urls.py
-│   ├── admin.py
-│   ├── forms.py
-│   ├── filters.py
-│   ├── tasks.py
-│   ├── signals.py
-│   └── tests/
-├── users/
-├── templates/
-├── static/
-├── manage.py
+│   ├── serializers.py
+│   ├── tasks.py              # celery 👍
+│   ├── signals.py 👍
+│   ├── filters.py 👍
+│   ├── utils/
+│   │   ├── image_converter.py
+│   │   ├── video_converter.py
+│   │   └── validators.py
+│   └── templatetags/
+│
+├── users/                    # пользователи
+├── templates/                # ВСЕ шаблоны
+├── static/                   # статика
+├── nginx/
+│   └── default.conf
+├── docker-compose.dev.yml
+├── docker-compose.prod.yml
+├── Dockerfile
+├── entrypoint.sh
 ├── requirements.txt
-└── .env.example
+├── pytest.ini
+├── manage.py
 ```
 ## 🧠 Цель проекта
 
