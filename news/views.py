@@ -117,10 +117,16 @@ class PostCreate(UserPassesTestMixin, CreateView):
         return response
 
 
-class PostUpdate(UserPassesTestMixin, UpdateView):
+class PostUpdate(UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'news/post_create_or_update.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.is_staff:
+            return qs
+        return qs.filter(author=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -134,9 +140,6 @@ class PostUpdate(UserPassesTestMixin, UpdateView):
             context['media_formset'] = PostMediaFormSet(queryset=self.object.media.all())
 
         return context
-
-    def test_func(self):
-        return self.get_object().author == self.request.user or self.request.user.is_staff
 
     def form_valid(self, form):
         context = self.get_context_data()
