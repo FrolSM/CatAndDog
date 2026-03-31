@@ -117,16 +117,18 @@ class PostCreate(UserPassesTestMixin, CreateView):
         return response
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'news/post_create_or_update.html'
+    login_url = '/login/'
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if self.request.user.is_staff:
+        user = self.request.user
+        if user.is_staff:
             return qs
-        return qs.filter(author=self.request.user)
+        return qs.filter(author=user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -148,7 +150,6 @@ class PostUpdate(UpdateView):
         response = super().form_valid(form)
 
         if media_formset.is_valid():
-            # Сохраняем новые файлы и удаляем отмеченные
             for media_form in media_formset:
                 if media_form.cleaned_data:
                     if media_form.cleaned_data.get('DELETE', False):
