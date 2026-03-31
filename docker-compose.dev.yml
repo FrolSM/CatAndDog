@@ -6,7 +6,7 @@ services:
     image: catanddog_app
     command: gunicorn CatAndDog.wsgi:application --bind 0.0.0.0:8000
     env_file:
-      - .env
+      - .env.dev
     volumes:
       - .:/app   #только в dev
       - static_volume:/app/staticfiles
@@ -20,7 +20,7 @@ services:
   db:
     image: postgres:15
     env_file:
-      - .env
+      - .env.dev
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -35,7 +35,7 @@ services:
     build: .
     command: celery -A CatAndDog worker -l info -E
     env_file:
-      - .env
+      - .env.dev
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
@@ -47,7 +47,7 @@ services:
     build: .
     command: celery -A CatAndDog beat -l info
     env_file:
-      - .env
+      - .env.dev
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/1
@@ -59,7 +59,7 @@ services:
     build: .
     command: celery -A CatAndDog flower --port=5555
     env_file:
-      - .env
+      - .env.dev
     ports:
       - "5555:5555"
     depends_on:

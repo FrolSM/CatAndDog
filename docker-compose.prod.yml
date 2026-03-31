@@ -12,7 +12,7 @@ services:
       --access-logfile -
       --error-logfile -
     env_file:
-      - .env
+      - .env.docker.docker
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
@@ -31,7 +31,7 @@ services:
   db:
     image: postgres:15
     env_file:
-      - .env
+      - .env.docker.docker
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
@@ -55,7 +55,7 @@ services:
     image: catanddog_app
     command: celery -A CatAndDog worker -l info
     env_file:
-      - .env
+      - .env.docker.docker
     depends_on:
       db:
         condition: service_healthy
@@ -67,7 +67,7 @@ services:
     image: catanddog_app
     command: celery -A CatAndDog beat -l info
     env_file:
-      - .env
+      - .env.docker.docker
     depends_on:
       db:
         condition: service_healthy
