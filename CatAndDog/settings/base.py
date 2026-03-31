@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-env_file = os.getenv("ENV_FILE", ".env")
+env_file = os.getenv("ENV_FILE", ".env.dev")
 load_dotenv(env_file)
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
