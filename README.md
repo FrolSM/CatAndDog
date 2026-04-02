@@ -1,136 +1,121 @@
 # 🐾 CatAndDog — сайт для питомника
 
-Учебно-практический веб-проект на **Django**, реализующий сайт питомника с новостями, питомцами, системой пользователей, лайками, комментариями и REST API.
-
-Проект создан как тренировочный, но с применением production-подходов: кеширование, фоновые задачи, ролевая модель доступа и автоматические тесты.
-
----
-
-## 🧩 Описание проекта
-
-Сайт предназначен для публикации новостей питомника и пользовательского контента.  
-Зарегистрированные пользователи могут комментировать записи и ставить лайки, а получив роль **автора** — публиковать собственные посты и питомцев.
-
-Проект сочетает **классический Django (CBV + шаблоны)** и **Django REST Framework**.
+Учебно-практический веб-проект на Django для питомника: публикация новостей, управление питомцами и взаимодействие пользователей через комментарии и лайки.  
+Проект сочетает классический Django с современными практиками: кеширование, асинхронные задачи, REST API и ролевую модель доступа.
 
 ---
 
-## 🚀 Функциональные возможности
+## 🚀 Функционал
 
-### 👤 Пользователи и авторизация
-- регистрация и вход в аккаунт сайта
-- OAuth-авторизация:
-  - Яндекс
-  - ВКонтакте
-- разграничение прав доступа:
-  - пользователь
-  - автор
-  - администратор
+### 👤 Пользователи
+- Регистрация и вход (email/password)
+- OAuth-авторизация: Яндекс, ВКонтакте
+- Комментирование постов
+- Лайки (toggle: 1 пользователь — 1 лайк)
+- Просмотр питомцев и новостей
 
-### 📰 Новости
-- публикация и управление постами (CRUD)
-- статусы публикации (черновик / опубликовано)
-- SEO-дружественные URL (`slug`)
-- изображения и видео в постах
-- комментарии авторизованных пользователей
-- система лайков (1 пользователь — 1 лайк, toggle-логика)
+### ✍️ Авторы
+- CRUD постов и питомцев
+- SEO-дружественные URL (slug)
+- Загрузка изображений и видео
+- Управление собственным контентом
 
-### 🐶 Питомцы
-- отдельная страница со списком питомцев
-- возможность публикации питомцев пользователями с правами автора
+### 🛠 Администраторы
+- Полный контроль над пользователями, постами и питомцами через Django Admin
+- REST API с ограничением доступа (`IsAdminUser`)
 
 ### ⚡ Производительность
-- кеширование списка постов с учётом query-параметров
-- кеширование детальной страницы поста
-- автоматическая очистка кеша через Django signals
+- Кеширование списков и детальных страниц постов
+- Автоматическая очистка кеша через Django signals
 
 ### 🧵 Фоновые задачи
 - Celery + django-celery-beat
-- еженедельная email-рассылка с количеством новых постов
+- Еженедельная email-рассылка с новыми постами
 
 ### 🌐 REST API
-- административный API для управления постами
-- доступ ограничен администраторами (`IsAdminUser`)
-- автогенерация документации (Swagger / Redoc)
+- Административный API для управления постами
+- Автогенерация документации (Swagger / Redoc)
 
 ---
 
-## 🛠 Используемые технологии
-
-- Python 3
-- Django 5.2
+## 🛠 Технологии
+- Python 3, Django 5.2
 - Django REST Framework
-- PostgreSQL
-- Redis
-- Celery + RabbitMQ
-- django-celery-beat
-- django-allauth
-- django-filter
-- drf-spectacular
+- PostgreSQL, Redis
+- Celery, RabbitMQ, django-celery-beat
+- django-allauth, django-filter, drf-spectacular
+- HTML, CSS
 - pytest / pytest-django
-- HTML / CSS
 
 ---
 
 ## ⚙️ Установка и запуск
 
+### 1. Клонируем репозиторий и создаем виртуальное окружение
 ```bash
 git clone https://github.com/username/CatAndDog.git
 cd CatAndDog
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-Создать файл .env и указать переменные окружения:
+```
+### 2. Настройка переменных окружения
+Локальная разработка (.env.dev)
 
-env
-Копировать код
+Создать файл .env.dev в корне проекта:
+```
 SECRET_KEY=your-secret-key
 DEBUG=True
 DATABASE_URL=postgres://user:password@localhost:5432/dbname
 REDIS_URL=redis://localhost:6379/0
-EMAIL_HOST=...
-EMAIL_HOST_USER=...
-EMAIL_HOST_PASSWORD=...
-Применить миграции и запустить сервер:
+EMAIL_HOST=smtp.example.com
+EMAIL_HOST_USER=your-email@example.com
+EMAIL_HOST_PASSWORD=your-email-password
+```
+Docker / Production (.env.docker)
 
-bash
-Копировать код
+Создать файл .env.docker в корне проекта:
+```
+SECRET_KEY=your-secret-key
+DEBUG=False
+DATABASE_URL=postgres://user:password@db:5432/dbname
+REDIS_URL=redis://redis:6379/0
+EMAIL_HOST=smtp.example.com
+EMAIL_HOST_USER=your-email@example.com
+EMAIL_HOST_PASSWORD=your-email-password
+```
+💡 Примечание: В Docker Compose используются имена сервисов (db, redis) вместо localhost
+
+### 3.Применение миграций и запуск сервера
+Локально
+```
 python manage.py migrate
 python manage.py runserver
-🧵 Celery
-Запуск worker:
-
-bash
-Копировать код
+```
+Через Docker
+```
+docker-compose -f docker-compose.dev.yml up --build
+```
+### 4. Запуск Celery
+Локально
+```
+# Worker
 celery -A CatAndDog worker -l info
-Запуск beat:
 
-bash
-Копировать код
+# Beat
 celery -A CatAndDog beat -l info
-🧪 Тестирование
-Проект покрыт тестами:
-
-views и permissions
-
-forms
-
-кеширование
-
-URL routing
-
-REST API
-
-Запуск тестов:
-
-bash
-Копировать код
+```
+Через Docker
+```
+docker-compose -f docker-compose.dev.yml up celery_worker celery_beat
+```
+### 5. Тестирование
+```
 pytest
-📌 Структура проекта
-text
-Копировать код
+```
+```
 CatAndDog/
-├── CatAndDog/                # core django
+├── CatAndDog/                # Core Django
 │   ├── settings/
 │   │   ├── base.py
 │   │   ├── local.py
@@ -140,22 +125,17 @@ CatAndDog/
 │   ├── urls.py
 │   ├── asgi.py
 │   └── wsgi.py
-├── news/                     # приложение (основное)
+├── news/                     # Основное приложение
 │   ├── models.py
 │   ├── views.py
 │   ├── serializers.py
-│   ├── tasks.py              # celery 👍
-│   ├── signals.py 👍
-│   ├── filters.py 👍
-│   ├── utils/
-│   │   ├── image_converter.py
-│   │   ├── video_converter.py
-│   │   └── validators.py
-│   └── templatetags/
-│
-├── users/                    # пользователи
-├── templates/                # ВСЕ шаблоны
-├── static/                   # статика
+│   ├── tasks.py
+│   ├── signals.py
+│   ├── filters.py
+│   └── utils/
+├── users/                    # Пользователи
+├── templates/                # Шаблоны
+├── static/                   # Статика
 ├── nginx/
 │   └── default.conf
 ├── docker-compose.dev.yml
@@ -163,27 +143,15 @@ CatAndDog/
 ├── Dockerfile
 ├── entrypoint.sh
 ├── requirements.txt
-├── pytest.ini
-├── manage.py
+└── manage.py
 ```
-## 🧠 Цель проекта
+## 🧪 Цели проекта
 
-Проект создан для практики и демонстрации следующих навыков:
+Проект создан для практики и демонстрации навыков:
 
-- 🧩 **Django CBV**  
-  Классические class-based views, миксины, шаблоны
-
-- 🌐 **Django REST Framework**  
-  ViewSets, permissions, сериализация, OpenAPI
-
-- 👥 **Ролевая модель и права доступа**  
-  Groups, permissions, `UserPassesTestMixin`, `IsAdminUser`
-
-- ⚡ **Кеширование и оптимизация**  
-  Redis, кеширование queryset и detail-view, signals
-
-- 🧵 **Фоновые задачи (Celery)**  
-  Асинхронные задачи, celery-beat, email-рассылки
-
-- 🧪 **Тестирование backend-логики**  
-  pytest, pytest-django, тесты views, API, cache и permissions
+Django CBV: class-based views, миксины, шаблоны
+Django REST Framework: ViewSets, permissions, сериализация, OpenAPI
+Ролевая модель: Groups, permissions, UserPassesTestMixin, IsAdminUser
+Кеширование и оптимизация: Redis, кеширование queryset и detail-view, signals
+Фоновые задачи (Celery): асинхронные задачи, celery-beat, email-рассылки
+Тестирование: pytest, pytest-django, тесты views, API, cache и permissions
