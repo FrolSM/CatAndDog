@@ -36,17 +36,6 @@ class PostsList(FilterView):
 
         return queryset
 
-    # как работает фильтр(но в проекте ипользуем FilterView)
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     self.post_filtered = PostFilter(self.request.GET, queryset=queryset)
-    #     return self.post_filtered.qs
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['filter'] = self.post_filtered
-    #     return context
-
 
 class PostDetail(DetailView):
     model = Post
