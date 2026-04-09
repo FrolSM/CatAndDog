@@ -1,7 +1,7 @@
 import pytest
 from django.core.cache import cache
 from django.urls import reverse
-from news.models import Post
+
 
 @pytest.mark.django_db
 def test_post_detail_is_cached(client, post):

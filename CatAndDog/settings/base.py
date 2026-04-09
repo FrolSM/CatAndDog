@@ -32,8 +32,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'allauth.socialaccount.providers.vk',
 
-    'news',
-    'users',
+    'apps.news',
+    'apps.users',
 
     'django_filters',
     'autoslug',

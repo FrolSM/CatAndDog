@@ -1,6 +1,6 @@
 import pytest
 from django.urls import reverse, resolve
-from news.views import (
+from apps.news.views import (
     PostsList,
     PostDetail,
     PostCreate,

@@ -4,7 +4,7 @@ import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from django.contrib.auth.models import User, Group
-from news.models import Post, Comment, Like, Category, PostMedia
+from apps.news.models import Post, Comment, Like, Category, PostMedia
 
 def get_test_image():
     file = io.BytesIO()

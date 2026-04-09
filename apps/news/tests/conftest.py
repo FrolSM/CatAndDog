@@ -1,6 +1,6 @@
 import pytest
 from django.contrib.auth.models import User, Group
-from news.models import Post, Category
+from apps.news.models import Post, Category
 
 @pytest.fixture
 def user(db):

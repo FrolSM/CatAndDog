@@ -1,9 +1,6 @@
 from django.contrib import admin, messages
 from django.utils.safestring import mark_safe
-
 from .models import Post, Category, Pets, Comment, PostMedia
-
-
 class PostMediaInline(admin.TabularInline):
     """
     Inline позволяет добавлять фото и видео

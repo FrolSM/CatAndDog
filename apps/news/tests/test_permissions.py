@@ -1,8 +1,7 @@
 import pytest
 from django.urls import reverse
-from django.contrib.auth.models import User, Group
-from django.core.exceptions import PermissionDenied
-from news.models import Post, Category
+from django.contrib.auth.models import User
+from apps.news.models import Post, Category
 
 # ============================================================
 # Редактирование поста

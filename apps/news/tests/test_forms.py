@@ -1,5 +1,5 @@
 import pytest
-from news.forms import PostForm, CommentForm
+from apps.news.forms import PostForm, CommentForm
 
 @pytest.mark.django_db
 def test_post_form_valid(category):
